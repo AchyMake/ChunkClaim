@@ -1,0 +1,25 @@
+name: ChunkClaim
+version: '${project.version}'
+main: net.achymake.chunkclaim.ChunkClaim
+api-version: 1.15
+prefix: ChunkClaim
+depend: [ Essential ]
+authors: [ AchyMake ]
+description: adds chunk claim to the server
+permissions:
+  chunkclaim.default:
+    description: default player
+    default: false
+  chunkclaim.reload:
+    description: reload config
+    default: false
+  chunkclaim.edit:
+    description: edit claimed chunks
+    default: false
+  chunkclaim.unprotect:
+    description: unprotects claimed chunks
+    default: false
+commands:
+  chunk:
+    permission: chunkclaim.default
+    description: allows to claim chunks

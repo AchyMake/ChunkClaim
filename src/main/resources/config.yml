@@ -1,0 +1,97 @@
+notify-update: true
+worlds:
+  - world
+  - world_nether
+  - world_the_end
+claim-cost: 1250.0
+claim-refund: 750.0
+claim:
+  sound:
+    type: BLOCK_AMETHYST_BLOCK_BREAK
+    volume: 0.7F
+    pitch: 1
+  particle:
+    type: TOTEM
+    count: 500
+    offsetX: 6.0
+    offsetY: 15.0
+    offsetZ: 6.0
+    extra: 0.0
+unclaim:
+  sound:
+    type: BLOCK_AMETHYST_BLOCK_BREAK
+    volume: 0.7F
+    pitch: 1
+  particle:
+    type: SPELL_INSTANT
+    count: 500
+    offsetX: 6.0
+    offsetY: 15.0
+    offsetZ: 6.0
+    extra: 0.0
+hostiles:
+  - AREA_EFFECT_CLOUD
+  - ARROW
+  - BAT
+  - BLAZE
+  - CAVE_SPIDER
+  - CREEPER
+  - DRAGON_FIREBALL
+  - DROPPED_ITEM
+  - DROWNED
+  - EGG
+  - ELDER_GUARDIAN
+  - ENDER_CRYSTAL
+  - ENDER_DRAGON
+  - ENDER_PEARL
+  - ENDER_SIGNAL
+  - ENDERMAN
+  - ENDERMITE
+  - EVOKER
+  - EVOKER_FANGS
+  - EXPERIENCE_ORB
+  - FALLING_BLOCK
+  - FIREBALL
+  - FIREWORK
+  - GHAST
+  - GIANT
+  - GUARDIAN
+  - HOGLIN
+  - HUSK
+  - ILLUSIONER
+  - LIGHTING
+  - LLAMA_SPIT
+  - MAGMA_CUBE
+  - MARKER
+  - PHANTOM
+  - PIGLIN
+  - PIGLIN_BRUTE
+  - PILLAGER
+  - PLAYER
+  - PRIMED_TNT
+  - RAVAGER
+  - SHULKER
+  - SHULKER_BULLET
+  - SILVERFISH
+  - SKELETON
+  - SLIME
+  - SMALL_FIREBALL
+  - SNOWBALL
+  - SPECTRAL_ARROW
+  - SPIDER
+  - SPLASH_POTION
+  - STRAY
+  - THROWN_EXP_BOTTLE
+  - TRIDENT
+  - UNKNOWN
+  - VEX
+  - VINDICATOR
+  - WARDEN
+  - WITCH
+  - WITHER
+  - WITHER_SKELETON
+  - WITHER_SKULL
+  - ZOGLIN
+  - ZOMBIE
+  - ZOMBIE_VILLAGER
+  - ZOMBIFIED_PIGLIN
