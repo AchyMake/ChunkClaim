@@ -49,7 +49,7 @@ public class ClaimCommand extends ChunkSubCommand {
                     player.playSound(player.getLocation(), Sound.valueOf(Config.get().getString("settings.claim.sound.type")), Float.parseFloat(Config.get().getString("settings.claim.sound.volume")), Config.get().getInt("settings.claim.sound.pitch"));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Chunk is claimed for &c"+ChunkClaim.econ.format(Config.get().getDouble("economy.claim-cost"))));
                 } else {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have &a$"+ChunkClaim.econ.format(Config.get().getDouble("economy.claim-cost"))+"&c to claim this chunk"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have &a"+ChunkClaim.econ.format(Config.get().getDouble("economy.claim-cost"))+"&c to claim this chunk"));
                 }
             }
         }
