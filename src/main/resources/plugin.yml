@@ -3,7 +3,7 @@ version: '${project.version}'
 main: net.achymake.chunkclaim.ChunkClaim
 api-version: 1.15
 prefix: ChunkClaim
-depend: [ Essential ]
+depend: [ Vault ]
 authors: [ AchyMake ]
 description: adds chunk claim to the server
 permissions:
