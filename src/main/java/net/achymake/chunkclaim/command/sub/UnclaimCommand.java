@@ -38,7 +38,7 @@ public class UnclaimCommand extends ChunkSubCommand {
                     ChunkData.save();
                     player.spawnParticle(Particle.valueOf(Config.get().getString("settings.un-claim.particle.type")),player.getLocation().getChunk().getBlock(8,64,8).getX(),player.getLocation().add(0,3,0).getBlockY(),player.getLocation().getChunk().getBlock(8,64,8).getZ(), Config.get().getInt("settings.un-claim.particle.count"), Config.get().getDouble("settings.un-claim.particle.offsetX"), Config.get().getDouble("settings.un-claim.particle.offsetY"), Config.get().getDouble("settings.un-claim.particle.offsetZ"), 0);
                     player.playSound(player.getLocation(), Sound.valueOf(Config.get().getString("settings.un-claim.sound.type")),Float.parseFloat(Config.get().getString("settings.un-claim.sound.volume")), Config.get().getInt("settings.un-claim.sound.pitch"));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You unclaimed a chunk refunded &a$"+ChunkClaim.econ.format(Config.get().getDouble("economy.claim-refund"))));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6You unclaimed a chunk refunded &a"+ChunkClaim.econ.format(Config.get().getDouble("economy.claim-refund"))));
                 }else{
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cChunk is owned by &f"+ ChunkSettings.getOwner(chunk)));
                 }
