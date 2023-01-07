@@ -1,34 +1,61 @@
+#Spigot sound list: "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html"
+#Spigot particle list: "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html"
+#Notifies Plugin Update
 notify-update: true
+#Enables chunk claiming
 worlds:
   - world
   - world_nether
   - world_the_end
-claim-cost: 1250.0
-claim-refund: 750.0
-claim:
-  sound:
-    type: BLOCK_AMETHYST_BLOCK_BREAK
-    volume: 0.7F
-    pitch: 1
-  particle:
-    type: TOTEM
-    count: 500
-    offsetX: 6.0
-    offsetY: 15.0
-    offsetZ: 6.0
-    extra: 0.0
-unclaim:
-  sound:
-    type: BLOCK_AMETHYST_BLOCK_BREAK
-    volume: 0.7F
-    pitch: 1
-  particle:
-    type: SPELL_INSTANT
-    count: 500
-    offsetX: 6.0
-    offsetY: 15.0
-    offsetZ: 6.0
-    extra: 0.0
+#Economy Settings
+economy:
+  claim-cost: 1250.0
+  claim-refund: 750.0
+#Claiming Settings
+settings:
+  claim:
+    sound:
+      #default values:
+      #type: BLOCK_AMETHYST_BLOCK_BREAK
+      #volume: 0.7F
+      #pitch 1.0F
+      type: BLOCK_AMETHYST_BLOCK_BREAK
+      volume: 0.7F
+      pitch: 1.0F
+    particle:
+      #default values:
+      #type: TOTEM
+      #count: 500
+      #offsetX: 6.0
+      #offsetY: 15.0
+      #offsetZ: 6.0
+      type: TOTEM
+      count: 500
+      offsetX: 6.0
+      offsetY: 15.0
+      offsetZ: 6.0
+  un-claim:
+    sound:
+      #default values:
+      #type: BLOCK_AMETHYST_BLOCK_BREAK
+      #volume: 0.7F
+      #pitch 1.0F
+      type: BLOCK_AMETHYST_BLOCK_BREAK
+      volume: 0.7F
+      pitch: 1.0F
+    particle:
+      #default values:
+      #type: SPELL_INSTANT
+      #count: 500
+      #offsetX: 6.0
+      #offsetY: 15.0
+      #offsetZ: 6.0
+      type: SPELL_INSTANT
+      count: 500
+      offsetX: 6.0
+      offsetY: 15.0
+      offsetZ: 6.0
+#These will be ignored from interact/playerDamage
 hostiles:
   - AREA_EFFECT_CLOUD
   - ARROW

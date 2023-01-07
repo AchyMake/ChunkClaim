@@ -10,10 +10,10 @@ import java.io.IOException;
 public class ChunkData {
     public static File configFile = new File(ChunkClaim.instance.getDataFolder(), "chunk.db");
     public static FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    public static void setup(ChunkClaim plugin){
+    public static void setup(){
         if (!configFile.exists()){
-            plugin.saveResource("chunk.db",false);
-            reload();
+            get().options().copyDefaults(true);
+            save();
         }
     }
     public static FileConfiguration get(){

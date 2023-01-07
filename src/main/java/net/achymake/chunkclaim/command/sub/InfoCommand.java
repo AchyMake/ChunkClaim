@@ -1,12 +1,12 @@
 package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
-import net.achymake.chunkclaim.config.ChunkConfig;
+import net.achymake.chunkclaim.config.Config;
 import net.achymake.chunkclaim.settings.ChunkSettings;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class ChunkInfo extends ChunkSubCommand {
+public class InfoCommand extends ChunkSubCommand {
     @Override
     public String getName() {
         return "info";
@@ -14,7 +14,7 @@ public class ChunkInfo extends ChunkSubCommand {
 
     @Override
     public String getDescription() {
-        return "allow to edit chunk";
+        return "checks chunk info";
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ChunkInfo extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (player.hasPermission("chunkclaim.edit")){
-            if (ChunkConfig.get().getStringList("worlds").contains(player.getWorld().getName())){
+            if (Config.get().getStringList("worlds").contains(player.getWorld().getName())){
                 if (ChunkSettings.isClaimed(player.getLocation().getChunk())){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Chunk owner:&f "+ChunkSettings.getOwner(player.getLocation().getChunk())));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Date claimed:&f "+ChunkSettings.getDateClaimed(player.getLocation().getChunk())));

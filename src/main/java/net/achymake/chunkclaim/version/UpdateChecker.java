@@ -10,10 +10,10 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-public class ChunkUpdate {
+public class UpdateChecker {
     private final ChunkClaim plugin;
     private final int resourceId;
-    public ChunkUpdate(ChunkClaim plugin, int resourceId) {
+    public UpdateChecker(ChunkClaim plugin, int resourceId) {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }
@@ -36,7 +36,7 @@ public class ChunkUpdate {
     }
     public static void getUpdate(ChunkClaim plugin){
         if (plugin.getConfig().getBoolean("notify-update")) {
-            (new ChunkUpdate(plugin, 106921)).getVersion((latest) -> {
+            (new UpdateChecker(plugin, 106921)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[&e"+plugin.getName()+"&6&l]&r You are using the latest version"));
                 } else {

@@ -1,11 +1,11 @@
 package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
-import net.achymake.chunkclaim.config.ChunkFiles;
+import net.achymake.chunkclaim.config.Files;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class ChunkReload extends ChunkSubCommand {
+public class ReloadCommand extends ChunkSubCommand {
     @Override
     public String getName() {
         return "reload";
@@ -13,7 +13,7 @@ public class ChunkReload extends ChunkSubCommand {
 
     @Override
     public String getDescription() {
-        return "allow to edit chunk";
+        return "reload config";
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ChunkReload extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (player.hasPermission("chunkclaim.reload")){
-            ChunkFiles.reload();
+            Files.reload();
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6ChunkClaim reloaded"));
         }
     }

@@ -16,13 +16,13 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
     private final ArrayList<ChunkSubCommand> chunkSubCommands = new ArrayList<>();
 
     public ChunkCommand(){
-        chunkSubCommands.add(new ChunkClaim());
-        chunkSubCommands.add(new ChunkEdit());
-        chunkSubCommands.add(new ChunkInfo());
-        chunkSubCommands.add(new ChunkMembers());
-        chunkSubCommands.add(new ChunkReload());
-        chunkSubCommands.add(new ChunkUnclaim());
-        chunkSubCommands.add(new ChunkUnProtect());
+        chunkSubCommands.add(new ClaimCommand());
+        chunkSubCommands.add(new EditCommand());
+        chunkSubCommands.add(new InfoCommand());
+        chunkSubCommands.add(new MembersCommand());
+        chunkSubCommands.add(new ReloadCommand());
+        chunkSubCommands.add(new UnclaimCommand());
+        chunkSubCommands.add(new UnProtectCommand());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

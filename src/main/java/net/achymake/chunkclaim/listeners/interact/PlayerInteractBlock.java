@@ -13,8 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ChunkPlayerInteractBlock implements Listener {
-    public ChunkPlayerInteractBlock(ChunkClaim plugin){
+public class PlayerInteractBlock implements Listener {
+    public PlayerInteractBlock(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)

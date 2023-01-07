@@ -1,7 +1,7 @@
 package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
-import net.achymake.chunkclaim.config.ChunkConfig;
+import net.achymake.chunkclaim.config.Config;
 import net.achymake.chunkclaim.config.ChunkData;
 import net.achymake.chunkclaim.settings.ChunkSettings;
 import org.bukkit.Bukkit;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
-public class ChunkMembers extends ChunkSubCommand {
+public class MembersCommand extends ChunkSubCommand {
     @Override
     public String getName() {
         return "members";
@@ -21,7 +21,7 @@ public class ChunkMembers extends ChunkSubCommand {
 
     @Override
     public String getDescription() {
-        return "add members to the chunk";
+        return "add or removes members to the chunk";
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ChunkMembers extends ChunkSubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
-        if (ChunkConfig.get().getStringList("worlds").contains(player.getWorld().getName())){
+        if (Config.get().getStringList("worlds").contains(player.getWorld().getName())){
             Chunk chunk = player.getLocation().getChunk();
             if (ChunkSettings.isClaimed(chunk)) {
                 if (ChunkSettings.isOwner(player.getUniqueId(),chunk)) {

@@ -1,4 +1,4 @@
-package net.achymake.chunkclaim.listeners.block;
+package net.achymake.chunkclaim.listeners.bucket;
 
 import net.achymake.chunkclaim.ChunkClaim;
 import net.achymake.chunkclaim.settings.ChunkSettings;
@@ -8,15 +8,16 @@ import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 
-public class ChunkBlockBreak implements Listener {
-    public ChunkBlockBreak(ChunkClaim plugin){
+public class BucketFill implements Listener {
+    public BucketFill(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
+
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerChatEvent (BlockBreakEvent event){
-        Chunk chunk = event.getBlock().getChunk();
+    public void onPlayerChatEvent (PlayerBucketFillEvent event){
+        Chunk chunk = event.getBlockClicked().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
         if (ChunkSettings.isMember(event.getPlayer().getUniqueId(),chunk))return;

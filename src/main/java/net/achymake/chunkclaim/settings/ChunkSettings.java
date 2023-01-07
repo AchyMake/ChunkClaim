@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ChunkSettings {
-    private static FileConfiguration getData(){
+    public static FileConfiguration getData(){
         return ChunkData.get();
     }
     public static boolean isClaimed(Chunk chunk){
