@@ -5,7 +5,6 @@ import net.achymake.chunkclaim.command.ChunkSubCommand;
 import net.achymake.chunkclaim.config.Config;
 import net.achymake.chunkclaim.config.ChunkData;
 import net.achymake.chunkclaim.settings.ChunkSettings;
-import net.achymake.essential.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Particle;
