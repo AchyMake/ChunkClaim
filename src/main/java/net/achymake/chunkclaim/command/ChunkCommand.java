@@ -49,8 +49,8 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
                 commands.add("edit");
                 commands.add("info");
             }
-            if (sender.hasPermission("chunkclaim.unprotect")){
-                commands.add("unprotect");
+            if (sender.hasPermission("chunkclaim.delete")){
+                commands.add("delete");
             }
             if (sender.hasPermission("chunkclaim.reload")){
                 commands.add("reload");

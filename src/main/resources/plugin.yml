@@ -16,8 +16,8 @@ permissions:
   chunkclaim.edit:
     description: edit claimed chunks
     default: false
-  chunkclaim.unprotect:
-    description: unprotects claimed chunks
+  chunkclaim.delete:
+    description: delete claimed chunks
     default: false
 commands:
   chunk:
