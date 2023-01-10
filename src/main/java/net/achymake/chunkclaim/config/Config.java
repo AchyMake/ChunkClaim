@@ -9,12 +9,6 @@ import java.io.File;
 public class Config {
     public static File configFile = new File(ChunkClaim.instance.getDataFolder(), "config.yml");
     public static FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-    public static void setup(ChunkClaim plugin){
-        if (!configFile.exists()){
-            plugin.saveResource("config.yml",false);
-            reload();
-        }
-    }
     public static FileConfiguration get(){
         return config;
     }

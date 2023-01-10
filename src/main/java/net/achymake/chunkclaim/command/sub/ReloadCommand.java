@@ -1,7 +1,7 @@
 package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
-import net.achymake.chunkclaim.config.Files;
+import net.achymake.chunkclaim.config.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -24,7 +24,7 @@ public class ReloadCommand extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (player.hasPermission("chunkclaim.reload")){
-            Files.reload();
+            Config.reload();
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6ChunkClaim reloaded"));
         }
     }

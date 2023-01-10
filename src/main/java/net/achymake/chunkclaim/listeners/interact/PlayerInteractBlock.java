@@ -24,6 +24,8 @@ public class PlayerInteractBlock implements Listener {
         Chunk chunk = event.getClickedBlock().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (Tag.STAIRS.isTagged(event.getClickedBlock().getType()))return;
+        if (Tag.SLABS.isTagged(event.getClickedBlock().getType()))return;
+        if (Tag.SIGNS.isTagged(event.getClickedBlock().getType()))return;
         if (event.getClickedBlock().getType().equals(Material.ENDER_CHEST))return;
         if (event.getClickedBlock().getType().equals(Material.ENCHANTING_TABLE))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;

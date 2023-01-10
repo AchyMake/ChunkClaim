@@ -36,7 +36,7 @@ public class UpdateChecker {
     }
     public static void getUpdate(ChunkClaim plugin){
         if (plugin.getConfig().getBoolean("notify-update")) {
-            (new UpdateChecker(plugin, 106921)).getVersion((latest) -> {
+            (new UpdateChecker(plugin, 0)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[&e"+plugin.getName()+"&6&l]&r You are using the latest version"));
                 } else {

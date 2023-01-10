@@ -1,7 +1,6 @@
 package net.achymake.chunkclaim;
 
 import net.achymake.chunkclaim.command.ChunkCommand;
-import net.achymake.chunkclaim.config.Files;
 import net.achymake.chunkclaim.listeners.Events;
 import net.achymake.chunkclaim.version.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
@@ -16,9 +15,6 @@ public final class ChunkClaim extends JavaPlugin {
             return false;
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
         econ = rsp.getProvider();
         return econ != null;
     }
@@ -30,8 +26,9 @@ public final class ChunkClaim extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         instance = this;
-        Files.start(this);
         Events.start(this);
         UpdateChecker.getUpdate(this);
         getCommand("chunk").setExecutor(new ChunkCommand());

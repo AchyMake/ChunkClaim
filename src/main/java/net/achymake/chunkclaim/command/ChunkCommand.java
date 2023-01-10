@@ -22,7 +22,7 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
         chunkSubCommands.add(new MembersCommand());
         chunkSubCommands.add(new ReloadCommand());
         chunkSubCommands.add(new UnclaimCommand());
-        chunkSubCommands.add(new UnProtectCommand());
+        chunkSubCommands.add(new DeleteCommand());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

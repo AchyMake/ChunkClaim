@@ -1,7 +1,6 @@
 package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
-import net.achymake.chunkclaim.config.Config;
 import net.achymake.chunkclaim.settings.PlayerSettings;
 import org.bukkit.entity.Player;
 
@@ -24,9 +23,7 @@ public class EditCommand extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (player.hasPermission("chunkclaim.edit")){
-            if (Config.get().getStringList("worlds").contains(player.getWorld().getName())){
-                PlayerSettings.toggleChunkEdit(player);
-            }
+            PlayerSettings.toggleChunkEdit(player);
         }
     }
 }
