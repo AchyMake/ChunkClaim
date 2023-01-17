@@ -16,7 +16,7 @@ public class PlayerInteractEntity implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerChatEvent (PlayerInteractEntityEvent event){
+    public void onPlayerInteractEntity (PlayerInteractEntityEvent event){
         Chunk chunk = event.getRightClicked().getLocation().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;

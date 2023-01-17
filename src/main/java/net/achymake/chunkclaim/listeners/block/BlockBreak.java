@@ -17,7 +17,7 @@ public class BlockBreak implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerChatEvent (BlockBreakEvent event){
+    public void onPlayerBlockBreak (BlockBreakEvent event){
         Chunk chunk = event.getBlock().getChunk();
         UUID uuid = event.getPlayer().getUniqueId();
         if (!ChunkSettings.isClaimed(chunk))return;

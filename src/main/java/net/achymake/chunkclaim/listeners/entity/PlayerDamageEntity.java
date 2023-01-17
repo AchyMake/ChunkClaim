@@ -19,7 +19,7 @@ public class PlayerDamageEntity implements Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerChatEvent (EntityDamageByEntityEvent event){
+    public void onPlayerDamageEntity (EntityDamageByEntityEvent event){
         Chunk chunk = event.getEntity().getLocation().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (!event.getDamager().getType().equals(EntityType.PLAYER))return;

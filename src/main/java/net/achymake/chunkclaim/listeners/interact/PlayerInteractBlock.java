@@ -18,7 +18,7 @@ public class PlayerInteractBlock implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerChatEvent (PlayerInteractEvent event){
+    public void onPlayerInteractBlock (PlayerInteractEvent event){
         if (event.getClickedBlock() == null)return;
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK))return;
         Chunk chunk = event.getClickedBlock().getChunk();

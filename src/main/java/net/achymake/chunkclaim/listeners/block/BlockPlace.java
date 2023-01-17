@@ -15,7 +15,7 @@ public class BlockPlace implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerChatEvent (BlockPlaceEvent event){
+    public void onPlayerBlockPlace (BlockPlaceEvent event){
         Chunk chunk = event.getBlockPlaced().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;

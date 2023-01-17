@@ -15,7 +15,7 @@ public class BucketEmpty implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerChatEvent (PlayerBucketEmptyEvent event){
+    public void onPlayerBucketEmpty (PlayerBucketEmptyEvent event){
         Chunk chunk = event.getBlockClicked().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;

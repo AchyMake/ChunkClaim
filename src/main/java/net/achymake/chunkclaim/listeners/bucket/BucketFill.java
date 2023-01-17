@@ -16,7 +16,7 @@ public class BucketFill implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerChatEvent (PlayerBucketFillEvent event){
+    public void onPlayerBucketFill (PlayerBucketFillEvent event){
         Chunk chunk = event.getBlockClicked().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
