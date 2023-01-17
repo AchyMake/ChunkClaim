@@ -20,7 +20,7 @@ public class PlayerInteractEntity implements Listener {
         Chunk chunk = event.getRightClicked().getLocation().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
-        if (ChunkSettings.isMember(event.getPlayer().getUniqueId(),chunk))return;
+        if (ChunkSettings.getMembers(chunk).contains(event.getPlayer().getUniqueId()))return;
         if (Config.get().getStringList("hostiles").contains(event.getRightClicked().getType().toString()))return;
         if (PlayerSettings.hasEdit(event.getPlayer()))return;
         event.setCancelled(true);

@@ -26,7 +26,7 @@ public class PlayerDamageEntity implements Listener {
         Player player = (Player) event.getDamager();
         if (Config.get().getStringList("hostiles").contains(event.getEntity().getType().toString()))return;
         if (ChunkSettings.isOwner(player.getUniqueId(),chunk))return;
-        if (ChunkSettings.isMember(player.getUniqueId(),chunk))return;
+        if (ChunkSettings.getMembers(chunk).contains(event.getDamager().getUniqueId()))return;
         if (PlayerSettings.hasEdit(player))return;
         event.setCancelled(true);
         ChunkSettings.cancelPlayer(player,chunk);

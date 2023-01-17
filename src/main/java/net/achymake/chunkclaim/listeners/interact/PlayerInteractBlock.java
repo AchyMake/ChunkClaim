@@ -29,7 +29,7 @@ public class PlayerInteractBlock implements Listener {
         if (event.getClickedBlock().getType().equals(Material.ENDER_CHEST))return;
         if (event.getClickedBlock().getType().equals(Material.ENCHANTING_TABLE))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
-        if (ChunkSettings.isMember(event.getPlayer().getUniqueId(),chunk))return;
+        if (ChunkSettings.getMembers(chunk).contains(event.getPlayer().getUniqueId()))return;
         if (PlayerSettings.hasEdit(event.getPlayer()))return;
         event.setCancelled(true);
         ChunkSettings.cancelPlayer(event.getPlayer(),chunk);

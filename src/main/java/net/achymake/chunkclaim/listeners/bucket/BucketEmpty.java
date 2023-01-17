@@ -19,7 +19,7 @@ public class BucketEmpty implements Listener {
         Chunk chunk = event.getBlockClicked().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
         if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
-        if (ChunkSettings.isMember(event.getPlayer().getUniqueId(),chunk))return;
+        if (ChunkSettings.getMembers(chunk).contains(event.getPlayer().getUniqueId()))return;
         if (PlayerSettings.hasEdit(event.getPlayer()))return;
         event.setCancelled(true);
         ChunkSettings.cancelPlayer(event.getPlayer(),chunk);

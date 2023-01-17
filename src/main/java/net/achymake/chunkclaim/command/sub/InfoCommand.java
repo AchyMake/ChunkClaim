@@ -2,8 +2,11 @@ package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
 import net.achymake.chunkclaim.settings.ChunkSettings;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class InfoCommand extends ChunkSubCommand {
     @Override
@@ -28,9 +31,9 @@ public class InfoCommand extends ChunkSubCommand {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Chunk owner:&f "+ChunkSettings.getOwner(player.getLocation().getChunk())));
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Date claimed:&f "+ChunkSettings.getDateClaimed(player.getLocation().getChunk())));
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Members:"));
-                if (ChunkSettings.getMembers(player.getLocation().getChunk()) != null){
-                    for (String members : ChunkSettings.getMembers(player.getLocation().getChunk())){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6-&f "+members));
+                if (!ChunkSettings.getMembers(player.getLocation().getChunk()).isEmpty()){
+                    for (UUID uuid : ChunkSettings.getMembers(player.getLocation().getChunk())){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6-&f "+Bukkit.getOfflinePlayer(uuid).getName()));
                     }
                 }
             }

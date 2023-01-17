@@ -1,7 +1,7 @@
 name: ChunkClaim
 version: '${project.version}'
 main: net.achymake.chunkclaim.ChunkClaim
-api-version: 1.19
+api-version: 1.16
 prefix: ChunkClaim
 depend: [ Vault ]
 authors: [ AchyMake ]
@@ -9,16 +9,16 @@ description: adds chunk claim to the server
 permissions:
   chunkclaim.default:
     description: default player
-    default: false
+    default: op
   chunkclaim.reload:
     description: reload config
-    default: false
+    default: op
   chunkclaim.edit:
     description: edit claimed chunks
-    default: false
+    default: op
   chunkclaim.delete:
     description: delete claimed chunks
-    default: false
+    default: op
 commands:
   chunk:
     permission: chunkclaim.default

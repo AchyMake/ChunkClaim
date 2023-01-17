@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MembersCommand extends ChunkSubCommand {
     @Override
@@ -36,22 +37,24 @@ public class MembersCommand extends ChunkSubCommand {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6There are no members for this chunk"));
                     }else{
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Members:"));
-                        for (String names : ChunkSettings.getMembers(chunk)){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6-&f " + names));
+                        if (!ChunkSettings.getMembers(player.getLocation().getChunk()).isEmpty()){
+                            for (UUID uuid : ChunkSettings.getMembers(player.getLocation().getChunk())){
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6-&f "+Bukkit.getOfflinePlayer(uuid).getName()));
+                            }
                         }
                     }
                 } else if (args.length == 3) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
-                    List<String> uuid = ChunkSettings.getMembers(chunk);
+                    List<UUID> uuid = ChunkSettings.getMembers(chunk);
                     if (args[1].equalsIgnoreCase("add")) {
-                        if (ChunkSettings.getMembers(chunk).contains(target.getName())) {
+                        if (ChunkSettings.getMembers(chunk).contains(target.getUniqueId())) {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', target.getName() + "&c is already a member of this chunk"));
                         } else {
                             ChunkSettings.addMember(chunk,target.getUniqueId());
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', target.getName() + "&6 is added to this chunk"));
                         }
                     } else if (args[1].equalsIgnoreCase("remove")) {
-                        if (ChunkSettings.getMembers(chunk).contains(target.getName())) {
+                        if (ChunkSettings.getMembers(chunk).contains(target.getUniqueId())) {
                             ChunkSettings.removeMember(chunk,target.getUniqueId());
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', target.getName() + "&6 is removed from this chunk"));
                         } else {

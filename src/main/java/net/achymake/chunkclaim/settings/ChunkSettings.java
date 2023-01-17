@@ -4,17 +4,19 @@ import net.achymake.chunkclaim.ChunkClaim;
 import net.achymake.chunkclaim.config.Config;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +27,7 @@ public class ChunkSettings {
     public static void claimChunk(Player player){
         getData(player.getLocation().getChunk()).set(NamespacedKey.minecraft("owner"), PersistentDataType.STRING,player.getUniqueId().toString());
         getData(player.getLocation().getChunk()).set(NamespacedKey.minecraft("date-claimed"),PersistentDataType.STRING, SimpleDateFormat.getDateInstance().format(player.getLastPlayed()));
+        getData(player.getLocation().getChunk()).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,"");
     }
     public static boolean isClaimed(Chunk chunk){
         return getData(chunk).has(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
@@ -42,34 +45,59 @@ public class ChunkSettings {
     public static String getDateClaimed(Chunk chunk){
         return getData(chunk).get(NamespacedKey.minecraft("date-claimed"),PersistentDataType.STRING);
     }
-    public static boolean isMember(UUID uuid, Chunk chunk){
-        return getData(chunk).get(NamespacedKey.minecraft("members"),PersistentDataType.STRING).contains(uuid.toString());
-    }
-    public static void addMember(Chunk chunk, UUID targetUUID){
-        if (getData(chunk).has(NamespacedKey.minecraft("members"),PersistentDataType.STRING)){
-            String membersUUID = getData(chunk).get(NamespacedKey.minecraft("members"),PersistentDataType.STRING);
-            getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,membersUUID+targetUUID+"_");
-        }else{
-            getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,targetUUID+"_");
+    public static void addMember(Chunk chunk, UUID uuid){
+        List<UUID> uuidList = new ArrayList<>();
+        uuidList.add(uuid);
+        try {
+            ByteArrayOutputStream io = new ByteArrayOutputStream();
+            BukkitObjectOutputStream os = new BukkitObjectOutputStream(io);
+            os.writeInt(uuidList.size());
+            for (UUID listedUUID : uuidList){
+                os.writeObject(listedUUID);
+            }
+            os.flush();
+            byte[] rawData = io.toByteArray();
+            String encodedData = Base64.getEncoder().encodeToString(rawData);
+            getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,encodedData);
+        }catch (IOException e){
+            System.out.println(e);
         }
     }
-    public static void removeMember(Chunk chunk, UUID targetUUID){
-        String membersUUID = getData(chunk).get(NamespacedKey.minecraft("members"),PersistentDataType.STRING).replace(targetUUID+"_","");
-        getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,membersUUID);
-    }
-    public static List<String> getMembers(Chunk chunk){
-        List<String> names = new ArrayList<>();
-        if (getData(chunk).has(NamespacedKey.minecraft("members"),PersistentDataType.STRING)){
-            String members = getData(chunk).get(NamespacedKey.minecraft("members"),PersistentDataType.STRING);
-            String[] buildUUID = new String[]{members.replace("_", " ")};
-            for (String uuidString : buildUUID){
-                UUID uuid = UUID.fromString(uuidString);
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-                String playerNames = offlinePlayer.getName();
-                names.add(playerNames);
+    public static List<UUID> getMembers(Chunk chunk){
+        ArrayList<UUID> uuidArrayList = new ArrayList<>();
+        String encodedUUID = getData(chunk).get(NamespacedKey.minecraft("members"),PersistentDataType.STRING);
+        if (!encodedUUID.isEmpty()){
+            byte[] rawData = Base64.getDecoder().decode(encodedUUID);
+            try {
+                ByteArrayInputStream io = new ByteArrayInputStream(rawData);
+                BukkitObjectInputStream in = new BukkitObjectInputStream(io);
+                int uuidCount = in.readInt();
+                for (int i = 0; i < uuidCount; i++){
+                    uuidArrayList.add((UUID) in.readObject());
+                }
+            }catch (IOException | ClassNotFoundException ex){
+                System.out.println(ex);
             }
         }
-        return names;
+        return uuidArrayList;
+    }
+    public static void removeMember(Chunk chunk, UUID uuid){
+        List<UUID> uuidList = getMembers(chunk);
+        uuidList.remove(uuid);
+        try {
+            ByteArrayOutputStream io = new ByteArrayOutputStream();
+            BukkitObjectOutputStream os = new BukkitObjectOutputStream(io);
+            os.writeInt(uuidList.size());
+            for (UUID listedUUID : uuidList){
+                os.writeObject(listedUUID);
+            }
+            os.flush();
+            byte[] rawData = io.toByteArray();
+            String encodedData = Base64.getEncoder().encodeToString(rawData);
+            getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,encodedData);
+        }catch (IOException e){
+            System.out.println(e);
+        }
     }
     public static void cancelPlayer(Player player, Chunk chunk) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cChunk is owned by &f" + getOwner(chunk))));

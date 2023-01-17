@@ -33,14 +33,14 @@ public class ClaimCommand extends ChunkSubCommand {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cChunk is owned by &f"+ ChunkSettings.getOwner(chunk)));
             }
         } else {
-            if (ChunkClaim.econ.getBalance(player) >= Config.get().getDouble("economy.claim-cost")) {
-                ChunkClaim.econ.withdrawPlayer(player, Config.get().getDouble("economy.claim-cost"));
+            if (ChunkClaim.econ.getBalance(player) >= Config.get().getDouble("economy.cost")) {
+                ChunkClaim.econ.withdrawPlayer(player, Config.get().getDouble("economy.cost"));
                 ChunkSettings.claimChunk(player);
                 player.spawnParticle(Particle.valueOf(Config.get().getString("settings.claim.particle.type")), player.getLocation().getChunk().getBlock(8, 64, 8).getX(), player.getLocation().add(0,3,0).getBlockY(), player.getLocation().getChunk().getBlock(8, 64, 8).getZ(), Config.get().getInt("settings.claim.particle.count"), Config.get().getDouble("settings.claim.particle.offsetX"), Config.get().getDouble("settings.claim.particle.offsetY"), Config.get().getDouble("settings.claim.particle.offsetZ"), 0);
                 player.playSound(player.getLocation(), Sound.valueOf(Config.get().getString("settings.claim.sound.type")), Float.parseFloat(Config.get().getString("settings.claim.sound.volume")), Config.get().getInt("settings.claim.sound.pitch"));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Chunk is claimed for &c"+ ChunkClaim.econ.format(Config.get().getDouble("economy.claim-cost"))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6Chunk is claimed for &c"+ ChunkClaim.econ.format(Config.get().getDouble("economy.cost"))));
             } else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have &a"+ChunkClaim.econ.format(Config.get().getDouble("economy.claim-cost"))+"&c to claim this chunk"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cYou dont have &a"+ChunkClaim.econ.format(Config.get().getDouble("economy.cost"))+"&c to claim this chunk"));
             }
         }
     }

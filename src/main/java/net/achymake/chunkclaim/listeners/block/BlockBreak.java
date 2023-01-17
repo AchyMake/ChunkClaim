@@ -10,6 +10,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import java.util.UUID;
+
 public class BlockBreak implements Listener {
     public BlockBreak(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
@@ -17,9 +19,10 @@ public class BlockBreak implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChatEvent (BlockBreakEvent event){
         Chunk chunk = event.getBlock().getChunk();
+        UUID uuid = event.getPlayer().getUniqueId();
         if (!ChunkSettings.isClaimed(chunk))return;
-        if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
-        if (ChunkSettings.isMember(event.getPlayer().getUniqueId(),chunk))return;
+        if (ChunkSettings.isOwner(uuid,chunk))return;
+        if (ChunkSettings.getMembers(chunk).contains(event.getPlayer().getUniqueId()))return;
         if (PlayerSettings.hasEdit(event.getPlayer()))return;
         event.setCancelled(true);
         ChunkSettings.cancelPlayer(event.getPlayer(),chunk);
