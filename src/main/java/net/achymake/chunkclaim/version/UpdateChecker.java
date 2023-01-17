@@ -3,6 +3,7 @@ package net.achymake.chunkclaim.version;
 import net.achymake.chunkclaim.ChunkClaim;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,18 +31,29 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                this.plugin.getLogger().info("Unable to check for updates: " + e.getMessage());
+                Settings.sendMessage("Unable to check for updates: " + e.getMessage());
             }
         });
     }
     public static void getUpdate(ChunkClaim plugin){
-        if (plugin.getConfig().getBoolean("notify-update")) {
+        if (plugin.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, 0)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[&e"+plugin.getName()+"&6&l]&r You are using the latest version"));
+                    Settings.sendMessage("You are using the latest version");
                 } else {
-                    plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[&e"+plugin.getName()+"&6&l]&r &cNew update: &f" + latest));
-                    plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[&e"+plugin.getName()+"&6&l]&r &cCurrent version: &f" + plugin.getDescription().getVersion()));
+                    Settings.sendMessage("&cNew update: &f" + latest);
+                    Settings.sendMessage("&cCurrent version: &f" + plugin.getDescription().getVersion());
+                }
+            });
+        }
+    }
+    public static void sendMessage(Player player){
+        if (ChunkClaim.instance.getConfig().getBoolean("notify-update.enable")) {
+            (new UpdateChecker(ChunkClaim.instance, 0)).getVersion((latest) -> {
+                if (!ChunkClaim.instance.getDescription().getVersion().equalsIgnoreCase(latest)) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6"+ChunkClaim.instance.getName()+" Update:"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6new release: &f" + latest));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6current: &f" + ChunkClaim.instance.getDescription().getVersion()));
                 }
             });
         }
