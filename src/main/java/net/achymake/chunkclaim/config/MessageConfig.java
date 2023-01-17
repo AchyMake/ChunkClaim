@@ -18,8 +18,8 @@ public class MessageConfig {
             helpDefault.add("&6ChunkClaim Help:");
             helpDefault.add("&6- &f/chunk claim &7- Claims current Chunk");
             helpDefault.add("&6- &f/chunk members &7- Checks current Chunk Members");
-            helpDefault.add("&6- &f/chunk members add player &7- Checks current Chunk Members");
-            helpDefault.add("&6- &f/chunk members remove player &7- Checks current Chunk Members");
+            helpDefault.add("&6- &f/chunk members add player &7- Add target to Members");
+            helpDefault.add("&6- &f/chunk members remove player &7- Remove target from Members");
             helpDefault.add("&6- &f/chunk unclaim &7- Unclaims current Chunk");
             List<String> helpAdmin = new ArrayList<>();
             helpAdmin.add("&6- &f/chunk info &7- Checks current Chunk Info");
