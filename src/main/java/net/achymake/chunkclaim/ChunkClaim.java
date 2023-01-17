@@ -1,6 +1,7 @@
 package net.achymake.chunkclaim;
 
 import net.achymake.chunkclaim.command.ChunkCommand;
+import net.achymake.chunkclaim.config.MessageConfig;
 import net.achymake.chunkclaim.listeners.Events;
 import net.achymake.chunkclaim.settings.Settings;
 import net.achymake.chunkclaim.version.UpdateChecker;
@@ -16,13 +17,14 @@ public final class ChunkClaim extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         instance = this;
+        MessageConfig.setup();
         Events.start(this);
         UpdateChecker.getUpdate(this);
         getCommand("chunk").setExecutor(new ChunkCommand());
-        Settings.sendMessage("Enabled "+this.getName()+ " " +this.getDescription().getVersion());
+        Settings.sendMessage("&aEnabled&r "+this.getName()+ " " +this.getDescription().getVersion());
     }
     @Override
     public void onDisable() {
-        Settings.sendMessage("Disabled "+this.getName()+ " " +this.getDescription().getVersion());
+        Settings.sendMessage("&cDisabled&r "+this.getName()+ " " +this.getDescription().getVersion());
     }
 }

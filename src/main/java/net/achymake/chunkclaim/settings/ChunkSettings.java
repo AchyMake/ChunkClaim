@@ -2,6 +2,7 @@ package net.achymake.chunkclaim.settings;
 
 import net.achymake.chunkclaim.ChunkClaim;
 import net.achymake.chunkclaim.config.Config;
+import net.achymake.chunkclaim.config.MessageConfig;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -14,6 +15,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -100,7 +102,7 @@ public class ChunkSettings {
         }
     }
     public static void cancelPlayer(Player player, Chunk chunk) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&',"&cChunk is owned by &f" + getOwner(chunk))));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),getOwner(chunk)))));
     }
     public static void delete(Chunk chunk){
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ChunkSettings.getOwner(chunk));

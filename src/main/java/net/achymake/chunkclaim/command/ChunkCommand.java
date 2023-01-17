@@ -16,13 +16,13 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
     private final ArrayList<ChunkSubCommand> chunkSubCommands = new ArrayList<>();
 
     public ChunkCommand(){
-        chunkSubCommands.add(new ClaimCommand());
-        chunkSubCommands.add(new EditCommand());
-        chunkSubCommands.add(new InfoCommand());
-        chunkSubCommands.add(new MembersCommand());
-        chunkSubCommands.add(new ReloadCommand());
-        chunkSubCommands.add(new UnclaimCommand());
-        chunkSubCommands.add(new DeleteCommand());
+        chunkSubCommands.add(new Claim());
+        chunkSubCommands.add(new Edit());
+        chunkSubCommands.add(new Info());
+        chunkSubCommands.add(new Members());
+        chunkSubCommands.add(new Reload());
+        chunkSubCommands.add(new Unclaim());
+        chunkSubCommands.add(new Delete());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -47,6 +47,8 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1){
             if (sender.hasPermission("chunkclaim.edit")){
                 commands.add("edit");
+            }
+            if (sender.hasPermission("chunkclaim.info")){
                 commands.add("info");
             }
             if (sender.hasPermission("chunkclaim.delete")){
@@ -57,6 +59,7 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
             }
             commands.add("claim");
             commands.add("members");
+            commands.add("help");
             commands.add("unclaim");
             return commands;
         } else if (args.length == 2) {

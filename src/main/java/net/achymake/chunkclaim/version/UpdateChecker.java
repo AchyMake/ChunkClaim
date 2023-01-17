@@ -42,8 +42,8 @@ public class UpdateChecker {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     Settings.sendMessage("You are using the latest version");
                 } else {
-                    Settings.sendMessage("New update: " + latest);
-                    Settings.sendMessage("Current version: " + plugin.getDescription().getVersion());
+                    Settings.sendMessage("&cNew update:&r " + latest);
+                    Settings.sendMessage("&cCurrent version:&r " + plugin.getDescription().getVersion());
                 }
             });
         }

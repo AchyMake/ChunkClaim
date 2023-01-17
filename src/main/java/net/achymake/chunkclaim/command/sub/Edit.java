@@ -4,7 +4,7 @@ import net.achymake.chunkclaim.command.ChunkSubCommand;
 import net.achymake.chunkclaim.settings.PlayerSettings;
 import org.bukkit.entity.Player;
 
-public class EditCommand extends ChunkSubCommand {
+public class Edit extends ChunkSubCommand {
     @Override
     public String getName() {
         return "edit";
@@ -23,7 +23,9 @@ public class EditCommand extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (player.hasPermission("chunkclaim.edit")){
-            PlayerSettings.toggleChunkEdit(player);
+            if (args.length == 1){
+                PlayerSettings.toggleChunkEdit(player);
+            }
         }
     }
 }
