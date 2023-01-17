@@ -1,7 +1,7 @@
 package net.achymake.chunkclaim;
 
 import net.achymake.chunkclaim.command.ChunkCommand;
-import net.achymake.chunkclaim.config.MessageConfig;
+import net.achymake.chunkclaim.config.Files;
 import net.achymake.chunkclaim.listeners.Events;
 import net.achymake.chunkclaim.settings.Settings;
 import net.achymake.chunkclaim.version.UpdateChecker;
@@ -17,7 +17,7 @@ public final class ChunkClaim extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         instance = this;
-        MessageConfig.setup();
+        Files.start();
         Events.start(this);
         UpdateChecker.getUpdate(this);
         getCommand("chunk").setExecutor(new ChunkCommand());
