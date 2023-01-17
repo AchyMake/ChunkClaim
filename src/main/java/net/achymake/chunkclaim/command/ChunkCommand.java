@@ -17,12 +17,13 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
 
     public ChunkCommand(){
         chunkSubCommands.add(new Claim());
+        chunkSubCommands.add(new Delete());
         chunkSubCommands.add(new Edit());
+        chunkSubCommands.add(new Help());
         chunkSubCommands.add(new Info());
         chunkSubCommands.add(new Members());
         chunkSubCommands.add(new Reload());
         chunkSubCommands.add(new Unclaim());
-        chunkSubCommands.add(new Delete());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
