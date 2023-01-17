@@ -1,6 +1,7 @@
 package net.achymake.chunkclaim.version;
 
 import net.achymake.chunkclaim.ChunkClaim;
+import net.achymake.chunkclaim.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
