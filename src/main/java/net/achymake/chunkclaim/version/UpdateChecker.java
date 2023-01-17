@@ -38,7 +38,7 @@ public class UpdateChecker {
     }
     public static void getUpdate(ChunkClaim plugin){
         if (plugin.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(plugin, 107444)).getVersion((latest) -> {
+            (new UpdateChecker(plugin, 106921)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     Settings.sendMessage("You are using the latest version");
                 } else {
@@ -50,7 +50,7 @@ public class UpdateChecker {
     }
     public static void sendMessage(Player player){
         if (ChunkClaim.instance.getConfig().getBoolean("notify-update.enable")) {
-            (new UpdateChecker(ChunkClaim.instance, 107444)).getVersion((latest) -> {
+            (new UpdateChecker(ChunkClaim.instance, 106921)).getVersion((latest) -> {
                 if (!ChunkClaim.instance.getDescription().getVersion().equalsIgnoreCase(latest)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6"+ChunkClaim.instance.getName()+" Update:"));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6new release: &f" + latest));
