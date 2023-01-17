@@ -19,10 +19,10 @@ public final class ChunkClaim extends JavaPlugin {
         Events.start(this);
         UpdateChecker.getUpdate(this);
         getCommand("chunk").setExecutor(new ChunkCommand());
-        Settings.sendMessage("&aEnabled &f"+this.getName()+ " " +this.getDescription().getVersion());
+        Settings.sendMessage("Enabled "+this.getName()+ " " +this.getDescription().getVersion());
     }
     @Override
     public void onDisable() {
-        Settings.sendMessage("&cDisabled &f"+this.getName()+ " " +this.getDescription().getVersion());
+        Settings.sendMessage("Disabled "+this.getName()+ " " +this.getDescription().getVersion());
     }
 }
