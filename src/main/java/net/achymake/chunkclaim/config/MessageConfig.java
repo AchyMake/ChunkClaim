@@ -41,7 +41,7 @@ public class MessageConfig {
             get().addDefault("command-members-remove","&f{0}&6 is removed from this chunk");
             get().addDefault("command-members-already-non-member","&f{0}&c is not a member of this chunk");
             get().addDefault("command-members-no-members","&6Chunk has no members");
-            get().addDefault("command-reload","reloaded");
+            get().addDefault("command-reload","&6{0} reloaded");
             get().addDefault("error-chunk-already-owned","&cYou already own this chunk");
             get().addDefault("error-chunk-already-claimed","&cChunk is owned by &f{0}");
             get().addDefault("error-chunk-already-unclaimed","&cChunk is already unclaimed");
