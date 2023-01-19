@@ -33,8 +33,8 @@ public class Delete extends ChunkSubCommand {
                 Chunk chunk = player.getLocation().getChunk();
                 if (ChunkSettings.isClaimed(chunk)){
                     ChunkSettings.delete(chunk);
-                    player.spawnParticle(Particle.valueOf(Config.get().getString("unclaim.particle.type")),player.getLocation().getChunk().getBlock(8,64,8).getX(),player.getLocation().add(0,3,0).getBlockY(),player.getLocation().getChunk().getBlock(8,64,8).getZ(), Config.get().getInt("unclaim.particle.count"), Config.get().getDouble("unclaim.particle.offsetX"), Config.get().getDouble("unclaim.particle.offsetY"), Config.get().getDouble("unclaim.particle.offsetZ"), Config.get().getDouble("unclaim.particle.extra"));
-                    player.playSound(player.getLocation(), Sound.valueOf(Config.get().getString("unclaim.sound.type")),Float.parseFloat(Config.get().getString("unclaim.sound.volume")), Config.get().getInt("unclaim.sound.pitch"));
+                    player.spawnParticle(Particle.valueOf(Config.get().getString("settings.un-claim.particle.type")),player.getLocation().getChunk().getBlock(8,64,8).getX(),player.getLocation().add(0,3,0).getBlockY(),player.getLocation().getChunk().getBlock(8,64,8).getZ(), Config.get().getInt("settings.un-claim.particle.count"), Config.get().getDouble("settings.un-claim.particle.offsetX"), Config.get().getDouble("settings.un-claim.particle.offsetY"), Config.get().getDouble("settings.un-claim.particle.offsetZ"), 0);
+                    player.playSound(player.getLocation(), Sound.valueOf(Config.get().getString("settings.un-claim.sound.type")),Float.parseFloat(Config.get().getString("settings.un-claim.sound.volume")), Config.get().getInt("settings.un-claim.sound.pitch"));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("command-delete")));
                 }else{
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("error-chunk-already-unclaimed")));
