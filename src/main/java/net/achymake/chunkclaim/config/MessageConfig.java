@@ -26,7 +26,7 @@ public class MessageConfig {
         helpAdmin.add("&6- &f/chunk delete &7- Safely unclaims current Chunk");
         helpAdmin.add("&6- &f/chunk reload &7- Reload Config");
         List<String> setowner = new ArrayList<>();
-        setowner.add("&6Type &a/chunk setowner {0}&6 to change chunk owner");
+        setowner.add("&6Type &a/chunk setowner {0}&6 again");
         setowner.add("&6You will not receive refund");
         get().addDefault("command-claim","&6Chunk is claimed for &c{0}");
         get().addDefault("command-unclaim","&6You unclaimed a chunk refunded &a{0}");
