@@ -25,6 +25,9 @@ public class MessageConfig {
         helpAdmin.add("&6- &f/chunk edit &7- Toggle edit Chunks");
         helpAdmin.add("&6- &f/chunk delete &7- Safely unclaims current Chunk");
         helpAdmin.add("&6- &f/chunk reload &7- Reload Config");
+        List<String> setowner = new ArrayList<>();
+        setowner.add("&6Type &a/chunk setowner {0}&6 to change chunk owner");
+        setowner.add("&6You will not receive refund");
         get().addDefault("command-claim","&6Chunk is claimed for &c{0}");
         get().addDefault("command-unclaim","&6You unclaimed a chunk refunded &a{0}");
         get().addDefault("command-delete","&6Chunk is now safely deleted");
@@ -41,10 +44,12 @@ public class MessageConfig {
         get().addDefault("command-members-already-non-member","&f{0}&c is not a member of this chunk");
         get().addDefault("command-members-no-members","&6Chunk has no members");
         get().addDefault("command-reload","&6{0} reloaded");
-        get().addDefault("command-setowner","&6Chunk owner changed to &f{0}");
+        get().addDefault("command-setowner",setowner);
+        get().addDefault("command-setowner-changed","&6Chunk owner changed to &f{0}");
         get().addDefault("error-chunk-already-owned","&cYou already own this chunk");
         get().addDefault("error-chunk-already-claimed","&cChunk is owned by &f{0}");
         get().addDefault("error-chunk-already-unclaimed","&cChunk is already unclaimed");
+        get().addDefault("error-chunk-changes-expired","&cChunk changes expired");
         get().addDefault("error-not-enough-currency","&cYou dont have &a{0}&c to claim this chunk");
         get().addDefault("player-visit-claimed-chunk","&6Visiting &f{0}&6 chunk");
         get().addDefault("player-exit-claimed-chunk","&6Exiting &f{0}&6 chunk");
