@@ -121,5 +121,6 @@ public class ChunkSettings {
         ChunkClaim.econ.depositPlayer(offlinePlayer, Config.get().getDouble("economy.refund"));
         ChunkSettings.getData(chunk).remove(NamespacedKey.minecraft("owner"));
         ChunkSettings.getData(chunk).remove(NamespacedKey.minecraft("date-claimed"));
+        ChunkSettings.getData(chunk).remove(NamespacedKey.minecraft("members"));
     }
 }
