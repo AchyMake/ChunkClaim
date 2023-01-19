@@ -6,6 +6,7 @@ import net.achymake.chunkclaim.listeners.block.BlockPlace;
 import net.achymake.chunkclaim.listeners.bucket.BucketEmpty;
 import net.achymake.chunkclaim.listeners.bucket.BucketFill;
 import net.achymake.chunkclaim.listeners.connection.PlayerJoin;
+import net.achymake.chunkclaim.listeners.connection.PlayerQuitWithTask;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntity;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityByArrow;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityBySnowball;
@@ -21,6 +22,7 @@ public class Events {
         new BucketEmpty(plugin);
         new BucketFill(plugin);
         new PlayerJoin(plugin);
+        new PlayerQuitWithTask(plugin);
         new PlayerDamageEntity(plugin);
         new PlayerDamageEntityByArrow(plugin);
         new PlayerDamageEntityBySnowball(plugin);

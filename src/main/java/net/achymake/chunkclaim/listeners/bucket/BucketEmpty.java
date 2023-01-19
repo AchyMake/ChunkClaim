@@ -14,7 +14,7 @@ public class BucketEmpty implements Listener {
     public BucketEmpty(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerBucketEmpty (PlayerBucketEmptyEvent event){
         Chunk chunk = event.getBlockClicked().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;

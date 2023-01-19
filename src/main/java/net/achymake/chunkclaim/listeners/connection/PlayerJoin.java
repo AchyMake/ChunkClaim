@@ -12,7 +12,7 @@ public class PlayerJoin implements Listener {
     public PlayerJoin(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin (PlayerJoinEvent event){
         if (!event.getPlayer().hasPermission("chunkclaim.reload"))return;
         UpdateChecker.sendMessage(event.getPlayer());

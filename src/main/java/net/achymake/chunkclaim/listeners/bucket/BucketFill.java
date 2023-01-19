@@ -15,7 +15,7 @@ public class BucketFill implements Listener {
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerBucketFill (PlayerBucketFillEvent event){
         Chunk chunk = event.getBlockClicked().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;

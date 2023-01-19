@@ -14,7 +14,7 @@ public class BlockPlace implements Listener {
     public BlockPlace(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerBlockPlace (BlockPlaceEvent event){
         Chunk chunk = event.getBlockPlaced().getChunk();
         if (!ChunkSettings.isClaimed(chunk))return;
