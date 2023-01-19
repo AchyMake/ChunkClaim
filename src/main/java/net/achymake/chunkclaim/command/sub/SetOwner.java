@@ -36,6 +36,10 @@ public class SetOwner extends ChunkSubCommand {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(nextOwner);
                     if (ChunkSettings.isOwner(player.getUniqueId(),chunk)) {
                         ChunkSettings.setOwner(player,offlinePlayer.getUniqueId(),player.getLocation().getChunk());
+                        int task = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER);
+                        Bukkit.getScheduler().cancelTask(task);
+                        player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner"));
+                        player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner-task"));
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-setowner-changed"),offlinePlayer.getName())));
                     } else {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),ChunkSettings.getOwner(chunk))));
