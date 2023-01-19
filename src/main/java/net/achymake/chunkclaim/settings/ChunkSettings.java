@@ -37,6 +37,11 @@ public class ChunkSettings {
     public static boolean isOwner(UUID uuid, Chunk chunk){
         return getData(chunk).get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING).equals(uuid.toString());
     }
+    public static void setOwner(Player player,UUID uuid, Chunk chunk){
+        getData(chunk).set(NamespacedKey.minecraft("owner"), PersistentDataType.STRING,uuid.toString());
+        getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,"");
+        getData(chunk).set(NamespacedKey.minecraft("date-claimed"),PersistentDataType.STRING, SimpleDateFormat.getDateInstance().format(player.getLastPlayed()));
+    }
     public static String getOwner(Chunk chunk){
         String uuidString = getData(chunk).get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
         UUID uuid = UUID.fromString(uuidString);
@@ -103,6 +108,13 @@ public class ChunkSettings {
     }
     public static void cancelPlayer(Player player, Chunk chunk) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),getOwner(chunk)))));
+    }
+    public static void playerVisitClaimedChunk(Player player, Chunk chunk) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("player-visit-claimed-chunk"),getOwner(chunk)))));
+    }
+    public static void playerExitClaimedChunk(Player player) {
+        String w = player.getPersistentDataContainer().get(NamespacedKey.minecraft("chunk-visitor"),PersistentDataType.STRING);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("player-exit-claimed-chunk"),w))));
     }
     public static void delete(Chunk chunk){
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ChunkSettings.getOwner(chunk));

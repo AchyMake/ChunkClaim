@@ -23,6 +23,7 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
         chunkSubCommands.add(new Info());
         chunkSubCommands.add(new Members());
         chunkSubCommands.add(new Reload());
+        chunkSubCommands.add(new SetOwner());
         chunkSubCommands.add(new Unclaim());
     }
     @Override
@@ -46,21 +47,22 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
-            if (sender.hasPermission("chunkclaim.edit")){
-                commands.add("edit");
-            }
-            if (sender.hasPermission("chunkclaim.info")){
-                commands.add("info");
-            }
+            commands.add("claim");
             if (sender.hasPermission("chunkclaim.delete")){
                 commands.add("delete");
             }
+            if (sender.hasPermission("chunkclaim.edit")){
+                commands.add("edit");
+            }
+            commands.add("help");
+            if (sender.hasPermission("chunkclaim.info")){
+                commands.add("info");
+            }
+            commands.add("members");
             if (sender.hasPermission("chunkclaim.reload")){
                 commands.add("reload");
             }
-            commands.add("claim");
-            commands.add("members");
-            commands.add("help");
+            commands.add("setowner");
             commands.add("unclaim");
             return commands;
         } else if (args.length == 2) {

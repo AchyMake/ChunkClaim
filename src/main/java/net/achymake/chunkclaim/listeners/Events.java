@@ -12,6 +12,7 @@ import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityBySnowball;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityBySpectralArrow;
 import net.achymake.chunkclaim.listeners.interact.PlayerInteractBlock;
 import net.achymake.chunkclaim.listeners.interact.PlayerInteractEntity;
+import net.achymake.chunkclaim.listeners.movement.PlayerMove;
 
 public class Events {
     public static void start(ChunkClaim plugin){
@@ -26,5 +27,6 @@ public class Events {
         new PlayerDamageEntityBySpectralArrow(plugin);
         new PlayerInteractBlock(plugin);
         new PlayerInteractEntity(plugin);
+        new PlayerMove(plugin);
     }
 }
