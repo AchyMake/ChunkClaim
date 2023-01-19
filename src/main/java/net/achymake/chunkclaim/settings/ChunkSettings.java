@@ -117,8 +117,10 @@ public class ChunkSettings {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("player-exit-claimed-chunk"),w))));
     }
     public static void delete(Chunk chunk){
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ChunkSettings.getOwner(chunk));
-        ChunkClaim.econ.depositPlayer(offlinePlayer, Config.get().getDouble("economy.refund"));
+        if (getOwner(chunk) != null){
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(getOwner(chunk));
+            ChunkClaim.econ.depositPlayer(offlinePlayer, Config.get().getDouble("economy.refund"));
+        }
         ChunkSettings.getData(chunk).remove(NamespacedKey.minecraft("owner"));
         ChunkSettings.getData(chunk).remove(NamespacedKey.minecraft("date-claimed"));
         ChunkSettings.getData(chunk).remove(NamespacedKey.minecraft("members"));
