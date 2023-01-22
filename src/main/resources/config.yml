@@ -7,52 +7,31 @@ economy:
   refund: 750.0
 settings:
   # Claiming Settings
-  # Spigot sound list: "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html"
-  # Spigot particle list: "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html"
   claim:
-    sound:
-      # default values:
-      # type: BLOCK_AMETHYST_BLOCK_BREAK
-      # volume: 0.7F
-      # pitch 1.0F
-      type: BLOCK_AMETHYST_BLOCK_BREAK
-      volume: 0.7F
-      pitch: 1.0F
+    # Spigot particle list: "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html"
     particle:
-      # default values:
       # type: TOTEM
-      # count: 500
-      # offsetX: 6.0
-      # offsetY: 15.0
-      # offsetZ: 6.0
       type: TOTEM
-      count: 500
-      offsetX: 6.0
-      offsetY: 15.0
-      offsetZ: 6.0
-  un-claim:
     sound:
-      # default values:
+      # Spigot sound list: "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html"
       # type: BLOCK_AMETHYST_BLOCK_BREAK
       # volume: 0.7F
       # pitch 1.0F
       type: BLOCK_AMETHYST_BLOCK_BREAK
       volume: 0.7F
       pitch: 1.0F
+  un-claim:
     particle:
-      # default values:
       # type: SPELL_INSTANT
-      # count: 500
-      # offsetX: 6.0
-      # offsetY: 15.0
-      # offsetZ: 6.0
       type: SPELL_INSTANT
-      count: 500
-      offsetX: 6.0
-      offsetY: 15.0
-      offsetZ: 6.0
+    sound:
+      # type: BLOCK_AMETHYST_BLOCK_BREAK
+      # volume: 0.7F
+      # pitch 1.0F
+      type: BLOCK_AMETHYST_BLOCK_BREAK
+      volume: 0.7F
+      pitch: 1.0F
 hostiles:
-  # These will be ignored from interact/playerDamage
   - AREA_EFFECT_CLOUD
   - ARROW
   - BAT
