@@ -35,37 +35,39 @@ public class SetOwner extends ChunkSubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
-        if (args.length == 2){
-            Chunk chunk = player.getLocation().getChunk();
-            UUID uuid = player.getUniqueId();
-            if (Settings.isClaimed(chunk)) {
-                if (Settings.isOwner(chunk,uuid)) {
-                    if (player.getPersistentDataContainer().has(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING)){
-                        String nextOwner = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING);
-                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(nextOwner);
-                        setOwner(player,offlinePlayer.getUniqueId());
-                        int task = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER);
-                        Bukkit.getScheduler().cancelTask(task);
-                        player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner"));
-                        player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner-task"));
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-setowner-changed"),offlinePlayer.getName())));
-                    }else{
-                        final int taskID = Bukkit.getScheduler().runTaskLater(ChunkClaim.instance, new Runnable() {
-                            @Override
-                            public void run() {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("error-chunk-changes-expired")));
-                                player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner"));
-                                player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner-task"));
+        if (player.hasPermission("chunkclaim.setowner")){
+            if (args.length == 2){
+                Chunk chunk = player.getLocation().getChunk();
+                UUID uuid = player.getUniqueId();
+                if (Settings.isClaimed(chunk)) {
+                    if (Settings.isOwner(chunk,uuid)) {
+                        if (player.getPersistentDataContainer().has(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING)){
+                            String nextOwner = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING);
+                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(nextOwner);
+                            setOwner(player,offlinePlayer.getUniqueId());
+                            int task = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER);
+                            Bukkit.getScheduler().cancelTask(task);
+                            player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner"));
+                            player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner-task"));
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-setowner-changed"),offlinePlayer.getName())));
+                        }else{
+                            final int taskID = Bukkit.getScheduler().runTaskLater(ChunkClaim.instance, new Runnable() {
+                                @Override
+                                public void run() {
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("error-chunk-changes-expired")));
+                                    player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner"));
+                                    player.getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner-task"));
+                                }
+                            }, 300).getTaskId();
+                            for (String messages : MessageConfig.get().getStringList("command-setowner")){
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageFormat.format(messages,args[1])));
                             }
-                        }, 300).getTaskId();
-                        for (String messages : MessageConfig.get().getStringList("command-setowner")){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageFormat.format(messages,args[1])));
+                            player.getPersistentDataContainer().set(NamespacedKey.minecraft("change-owner"),PersistentDataType.STRING,args[1]);
+                            player.getPersistentDataContainer().set(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER,taskID);
                         }
-                        player.getPersistentDataContainer().set(NamespacedKey.minecraft("change-owner"),PersistentDataType.STRING,args[1]);
-                        player.getPersistentDataContainer().set(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER,taskID);
+                    } else {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk))));
                     }
-                } else {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk))));
                 }
             }
         }

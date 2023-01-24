@@ -10,6 +10,9 @@ permissions:
   chunkclaim.default:
     description: default player
     default: op
+  chunkclaim.setowner:
+    description: sets chunk owner
+    default: op
   chunkclaim.delete:
     description: delete claimed chunks
     default: op
@@ -17,7 +20,7 @@ permissions:
     description: edit claimed chunks
     default: op
   chunkclaim.info:
-    description: edit claimed chunks
+    description: check chunk info
     default: op
   chunkclaim.reload:
     description: reload config
