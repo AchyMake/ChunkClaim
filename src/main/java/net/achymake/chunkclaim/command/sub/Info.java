@@ -2,7 +2,7 @@ package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
 import net.achymake.chunkclaim.config.MessageConfig;
-import net.achymake.chunkclaim.settings.ChunkSettings;
+import net.achymake.chunkclaim.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,14 +29,14 @@ public class Info extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (player.hasPermission("chunkclaim.info")){
-            if (ChunkSettings.isClaimed(player.getLocation().getChunk())){
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-info-owner"),ChunkSettings.getOwner(player.getLocation().getChunk()))));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-info-date-claimed"),ChunkSettings.getDateClaimed(player.getLocation().getChunk()))));
-                if (ChunkSettings.getMembers(player.getLocation().getChunk()).isEmpty()){
+            if (Settings.isClaimed(player.getLocation().getChunk())){
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-info-owner"),Settings.getOwner(player.getLocation().getChunk()))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-info-date-claimed"),Settings.getDateClaimed(player.getLocation().getChunk()))));
+                if (Settings.getMembers(player.getLocation().getChunk()).isEmpty()){
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("command-members-no-members")));
                 }else{
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("command-members")));
-                    for (UUID uuid : ChunkSettings.getMembers(player.getLocation().getChunk())){
+                    for (UUID uuid : Settings.getMembers(player.getLocation().getChunk())){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f "+Bukkit.getOfflinePlayer(uuid).getName()));
                     }
                 }

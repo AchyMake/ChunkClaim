@@ -1,7 +1,6 @@
 package net.achymake.chunkclaim.version;
 
 import net.achymake.chunkclaim.ChunkClaim;
-import net.achymake.chunkclaim.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,7 +31,7 @@ public class UpdateChecker {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                Settings.sendMessage("Unable to check for updates: " + e.getMessage());
+                ChunkClaim.instance.sendMessage("Unable to check for updates: " + e.getMessage());
             }
         });
     }
@@ -40,10 +39,10 @@ public class UpdateChecker {
         if (plugin.getConfig().getBoolean("notify-update.enable")) {
             (new UpdateChecker(plugin, 106921)).getVersion((latest) -> {
                 if (plugin.getDescription().getVersion().equalsIgnoreCase(latest)) {
-                    Settings.sendMessage("You are using the latest version");
+                    plugin.sendMessage("You are using the latest version");
                 } else {
-                    Settings.sendMessage("&cNew update:&r " + latest);
-                    Settings.sendMessage("&cCurrent version:&r " + plugin.getDescription().getVersion());
+                    plugin.sendMessage("&cNew update:&r " + latest);
+                    plugin.sendMessage("&cCurrent version:&r " + plugin.getDescription().getVersion());
                 }
             });
         }

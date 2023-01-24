@@ -11,8 +11,7 @@ import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntity;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityByArrow;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityBySnowball;
 import net.achymake.chunkclaim.listeners.entity.PlayerDamageEntityBySpectralArrow;
-import net.achymake.chunkclaim.listeners.interact.PlayerInteractBlock;
-import net.achymake.chunkclaim.listeners.interact.PlayerInteractEntity;
+import net.achymake.chunkclaim.listeners.interact.*;
 import net.achymake.chunkclaim.listeners.movement.PlayerMove;
 
 public class Events {
@@ -27,8 +26,21 @@ public class Events {
         new PlayerDamageEntityByArrow(plugin);
         new PlayerDamageEntityBySnowball(plugin);
         new PlayerDamageEntityBySpectralArrow(plugin);
-        new PlayerInteractBlock(plugin);
+        new Anvil(plugin);
+        new Beds(plugin);
+        new Beehives(plugin);
+        new Buttons(plugin);
+        new Chest(plugin);
+        new Crops(plugin);
+        new Doors(plugin);
+        new FenceGates(plugin);
+        new FlowerPots(plugin);
+        new Logs(plugin);
+        new Physical(plugin);
         new PlayerInteractEntity(plugin);
+        new ShulkerBoxes(plugin);
+        new TrapDoors(plugin);
+        new TrappedChest(plugin);
         new PlayerMove(plugin);
     }
 }

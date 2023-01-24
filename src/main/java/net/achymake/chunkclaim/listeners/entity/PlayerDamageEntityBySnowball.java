@@ -2,9 +2,12 @@ package net.achymake.chunkclaim.listeners.entity;
 
 import net.achymake.chunkclaim.ChunkClaim;
 import net.achymake.chunkclaim.config.Config;
-import net.achymake.chunkclaim.settings.ChunkSettings;
-import net.achymake.chunkclaim.settings.PlayerSettings;
+import net.achymake.chunkclaim.config.MessageConfig;
+import net.achymake.chunkclaim.settings.Settings;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -14,6 +17,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.text.MessageFormat;
+import java.util.UUID;
+
 public class PlayerDamageEntityBySnowball implements Listener {
     public PlayerDamageEntityBySnowball(ChunkClaim plugin){
         Bukkit.getPluginManager().registerEvents(this,plugin);
@@ -21,17 +27,21 @@ public class PlayerDamageEntityBySnowball implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerDamageEntityBySnowBall (EntityDamageByEntityEvent event){
         Chunk chunk = event.getEntity().getLocation().getChunk();
-        if (!ChunkSettings.isClaimed(chunk))return;
+        if (!Settings.isClaimed(chunk))return;
         if (!event.getDamager().getType().equals(EntityType.SNOWBALL))return;
         Snowball snowball = (Snowball) event.getDamager();
         if (snowball.getShooter() instanceof Player){
             Player player = (Player) snowball.getShooter();
+            UUID uuid = player.getUniqueId();
             if (Config.get().getStringList("hostiles").contains(event.getEntity().getType().toString()))return;
-            if (ChunkSettings.isOwner(player.getUniqueId(),chunk))return;
-            if (ChunkSettings.getMembers(chunk).contains(event.getDamager().getUniqueId()))return;
-            if (PlayerSettings.hasEdit(player))return;
+            if (Settings.isOwner(chunk, uuid))return;
+            if (Settings.isMember(chunk, uuid))return;
+            if (Settings.hasChunkEdit(player))return;
             event.setCancelled(true);
-            ChunkSettings.cancelPlayer(player,chunk);
+            cancelPlayer(chunk, player);
         }
+    }
+    private void cancelPlayer(Chunk chunk, Player player) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk)))));
     }
 }

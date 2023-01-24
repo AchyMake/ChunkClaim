@@ -2,14 +2,21 @@ package net.achymake.chunkclaim.listeners.interact;
 
 import net.achymake.chunkclaim.ChunkClaim;
 import net.achymake.chunkclaim.config.Config;
-import net.achymake.chunkclaim.settings.ChunkSettings;
-import net.achymake.chunkclaim.settings.PlayerSettings;
+import net.achymake.chunkclaim.config.MessageConfig;
+import net.achymake.chunkclaim.settings.Settings;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+
+import java.text.MessageFormat;
+import java.util.UUID;
 
 public class PlayerInteractEntity implements Listener {
     public PlayerInteractEntity(ChunkClaim plugin){
@@ -18,12 +25,17 @@ public class PlayerInteractEntity implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteractEntity (PlayerInteractEntityEvent event){
         Chunk chunk = event.getRightClicked().getLocation().getChunk();
-        if (!ChunkSettings.isClaimed(chunk))return;
-        if (ChunkSettings.isOwner(event.getPlayer().getUniqueId(),chunk))return;
-        if (ChunkSettings.getMembers(chunk).contains(event.getPlayer().getUniqueId()))return;
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+        if (!Settings.isClaimed(chunk))return;
+        if (Settings.isOwner(chunk,uuid))return;
+        if (Settings.isMember(chunk,uuid))return;
         if (Config.get().getStringList("hostiles").contains(event.getRightClicked().getType().toString()))return;
-        if (PlayerSettings.hasEdit(event.getPlayer()))return;
+        if (Settings.hasChunkEdit(player))return;
         event.setCancelled(true);
-        ChunkSettings.cancelPlayer(event.getPlayer(),chunk);
+        cancelPlayer(event.getPlayer(),chunk);
+    }
+    private void cancelPlayer(Player player, Chunk chunk) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk)))));
     }
 }
