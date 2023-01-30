@@ -4,7 +4,6 @@ import net.achymake.chunkclaim.ChunkClaim;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -30,8 +29,8 @@ public class Settings {
     public static boolean isClaimed(Chunk chunk) {
         return chunk.getPersistentDataContainer().has(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
     }
-    public static boolean isOwner(OfflinePlayer offlinePlayer, Chunk chunk) {
-        return chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING).equals(offlinePlayer.getUniqueId().toString());
+    public static boolean isOwner(Player player, Chunk chunk) {
+        return chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING).equals(player.getUniqueId().toString());
     }
     public static String getOwner(Chunk chunk) {
         String uuidString = chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
@@ -44,8 +43,8 @@ public class Settings {
     public static String getDateClaimed(Chunk chunk) {
         return chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("date-claimed"), PersistentDataType.STRING);
     }
-    public static boolean isMember(OfflinePlayer offlinePlayer, Chunk chunk) {
-        return getMembersUUID(chunk).contains(offlinePlayer.getUniqueId());
+    public static boolean isMember(Player player, Chunk chunk) {
+        return getMembersUUID(chunk).contains(player.getUniqueId());
     }
     public static List<String> getMembers(Chunk chunk) {
         ArrayList<String> names = new ArrayList();
