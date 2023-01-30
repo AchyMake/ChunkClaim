@@ -1,5 +1,7 @@
 package net.achymake.chunkclaim;
 
+import net.achymake.chunkclaim.api.PlaceholderSetup;
+import net.achymake.chunkclaim.api.VaultSetup;
 import net.achymake.chunkclaim.command.ChunkCommand;
 import net.achymake.chunkclaim.config.Files;
 import net.achymake.chunkclaim.listeners.Events;
@@ -15,10 +17,11 @@ public final class ChunkClaim extends JavaPlugin {
     public static ChunkClaim instance;
     @Override
     public void onEnable() {
-        setupEconomy(this);
         getConfig().options().copyDefaults(true);
         saveConfig();
         instance = this;
+        VaultSetup.setupEconomy(this);
+        PlaceholderSetup.setup(this);
         Files.start();
         Events.start(this);
         UpdateChecker.getUpdate(this);
@@ -31,19 +34,5 @@ public final class ChunkClaim extends JavaPlugin {
     }
     public void sendMessage(String message){
         Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&l[&e"+this.getName()+"&6&l]&r "+message));
-    }
-    private boolean setupEconomy() {
-        if (Bukkit.getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-        ChunkClaim.econ = rsp.getProvider();
-        return ChunkClaim.econ != null;
-    }
-    public void setupEconomy(ChunkClaim plugin){
-        if (!setupEconomy()){
-            plugin.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", plugin.getDescription().getName()));
-            plugin.getServer().getPluginManager().disablePlugin(plugin);
-        }
     }
 }

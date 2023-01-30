@@ -2,10 +2,11 @@ name: ChunkClaim
 version: '${project.version}'
 main: net.achymake.chunkclaim.ChunkClaim
 api-version: 1.16
-prefix: ChunkClaim
-depend: [ Vault ]
+prefix: '${project.name}'
+load: POSTWORLD
+depend: [ Vault, PlaceholderAPI ]
 authors: [ AchyMake ]
-description: adds chunk claim to the server
+description: '${project.description}'
 permissions:
   chunkclaim.default:
     description: default player
