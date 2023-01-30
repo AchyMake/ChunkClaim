@@ -5,14 +5,12 @@ import net.achymake.chunkclaim.config.MessageConfig;
 import net.achymake.chunkclaim.settings.Settings;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
@@ -72,11 +70,8 @@ public class Members extends ChunkSubCommand {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("error-chunk-already-unclaimed")));
         }
     }
-    private static PersistentDataContainer getData(Chunk chunk){
-        return chunk.getPersistentDataContainer();
-    }
     private static void addMember(Chunk chunk, UUID uuid){
-        List<UUID> uuidList = new ArrayList<>();
+        List<UUID> uuidList = Settings.getMembersUUID(chunk);
         uuidList.add(uuid);
         try {
             ByteArrayOutputStream io = new ByteArrayOutputStream();
@@ -88,7 +83,7 @@ public class Members extends ChunkSubCommand {
             os.flush();
             byte[] rawData = io.toByteArray();
             String encodedData = Base64.getEncoder().encodeToString(rawData);
-            getData(chunk).set(NamespacedKey.minecraft("members"), PersistentDataType.STRING,encodedData);
+            chunk.getPersistentDataContainer().set(NamespacedKey.minecraft("members"), PersistentDataType.STRING,encodedData);
         }catch (IOException e){
             System.out.println(e);
         }
@@ -106,7 +101,7 @@ public class Members extends ChunkSubCommand {
             os.flush();
             byte[] rawData = io.toByteArray();
             String encodedData = Base64.getEncoder().encodeToString(rawData);
-            getData(chunk).set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,encodedData);
+            chunk.getPersistentDataContainer().set(NamespacedKey.minecraft("members"),PersistentDataType.STRING,encodedData);
         }catch (IOException e){
             System.out.println(e);
         }
