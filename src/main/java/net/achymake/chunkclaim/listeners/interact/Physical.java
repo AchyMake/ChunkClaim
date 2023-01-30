@@ -16,7 +16,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.text.MessageFormat;
-import java.util.UUID;
 
 public class Physical implements Listener {
     public Physical(ChunkClaim plugin){
@@ -24,15 +23,12 @@ public class Physical implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteractBlock (PlayerInteractEvent event){
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
         if (event.getClickedBlock() == null)return;
         if (!event.getAction().equals(Action.PHYSICAL))return;
         Chunk chunk = event.getClickedBlock().getChunk();
         if (!Settings.isClaimed(chunk))return;
-        if (Settings.isOwner(chunk,uuid))return;
-        if (Settings.isMember(chunk,uuid))return;
-        if (Settings.hasChunkEdit(player))return;
+        Player player = event.getPlayer();
+        if (Settings.hasAccess(player,chunk))return;
         event.setCancelled(true);
         cancelPlayer(player,chunk);
     }

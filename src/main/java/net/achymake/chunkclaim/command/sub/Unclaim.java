@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 
 import java.text.MessageFormat;
-import java.util.UUID;
 
 public class Unclaim extends ChunkSubCommand {
     @Override
@@ -31,9 +30,8 @@ public class Unclaim extends ChunkSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         Chunk chunk = player.getLocation().getChunk();
-        UUID uuid = player.getUniqueId();
         if (Settings.isClaimed(chunk)){
-            if (Settings.isOwner(chunk,uuid)){
+            if (Settings.isOwner(player,chunk)){
                 delete(chunk);
                 chunkParticle(player);
                 player.playSound(player.getLocation(), Sound.valueOf(Config.get().getString("settings.un-claim.sound.type")),Float.parseFloat(Config.get().getString("settings.un-claim.sound.volume")), Config.get().getInt("settings.un-claim.sound.pitch"));

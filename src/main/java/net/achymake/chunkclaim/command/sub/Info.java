@@ -36,8 +36,8 @@ public class Info extends ChunkSubCommand {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("command-members-no-members")));
                 }else{
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("command-members")));
-                    for (UUID uuid : Settings.getMembers(player.getLocation().getChunk())){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f "+Bukkit.getOfflinePlayer(uuid).getName()));
+                    for (UUID uuid : Settings.getMembersUUID(player.getLocation().getChunk())){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f "+Bukkit.getServer().getOfflinePlayer(uuid).getName()));
                     }
                 }
             }

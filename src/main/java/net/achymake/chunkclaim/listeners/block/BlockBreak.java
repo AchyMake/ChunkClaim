@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import java.text.MessageFormat;
-import java.util.UUID;
 
 public class BlockBreak implements Listener {
     public BlockBreak(ChunkClaim plugin){
@@ -24,13 +23,11 @@ public class BlockBreak implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerBlockBreak (BlockBreakEvent event){
         Chunk chunk = event.getBlock().getChunk();
-        UUID uuid = event.getPlayer().getUniqueId();
         if (!Settings.isClaimed(chunk))return;
-        if (Settings.isOwner(chunk,uuid))return;
-        if (Settings.isMember(chunk,uuid))return;
-        if (Settings.hasChunkEdit(event.getPlayer()))return;
+        Player player = event.getPlayer();
+        if (Settings.hasAccess(player,chunk))return;
         event.setCancelled(true);
-        cancelPlayer(event.getPlayer(),chunk);
+        cancelPlayer(player,chunk);
     }
     private void cancelPlayer(Player player, Chunk chunk) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk)))));

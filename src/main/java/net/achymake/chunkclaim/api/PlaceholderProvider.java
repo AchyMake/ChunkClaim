@@ -2,12 +2,9 @@ package net.achymake.chunkclaim.api;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.achymake.chunkclaim.ChunkClaim;
+import net.achymake.chunkclaim.settings.Settings;
 import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
-
-import java.util.UUID;
 
 public class PlaceholderProvider extends PlaceholderExpansion {
     @Override
@@ -40,19 +37,28 @@ public class PlaceholderProvider extends PlaceholderExpansion {
             return "";
         }
         if (params.equals("is_claimed")) {
-            if (player.getLocation().getChunk().getPersistentDataContainer().has(NamespacedKey.minecraft("owner"), PersistentDataType.STRING)){
-                return ChatColor.translateAlternateColorCodes('&',"&atrue");
+            if (Settings.isClaimed(player.getLocation().getChunk())){
+                return ChatColor.translateAlternateColorCodes('&',"&aTrue");
             }else{
-                return ChatColor.translateAlternateColorCodes('&',"&cfalse");
+                return ChatColor.translateAlternateColorCodes('&',"&cFalse");
             }
         }
         if (params.equals("owner")) {
-            if (player.getLocation().getChunk().getPersistentDataContainer().has(NamespacedKey.minecraft("owner"), PersistentDataType.STRING)){
-                UUID uuid = UUID.fromString(player.getLocation().getChunk().getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING));
-                String name = player.getServer().getOfflinePlayer(uuid).getName();
-                return name;
+            if (Settings.isClaimed(player.getLocation().getChunk())){
+                return Settings.getOwner(player.getLocation().getChunk());
             }else{
-                return "none";
+                return "unclaimed";
+            }
+        }
+        if (params.equals("has_access")) {
+            if (Settings.isClaimed(player.getLocation().getChunk())){
+                if (Settings.hasAccess(player,player.getLocation().getChunk())){
+                    return ChatColor.translateAlternateColorCodes('&',"&aTrue");
+                }else{
+                    return ChatColor.translateAlternateColorCodes('&',"&cFalse");
+                }
+            }else{
+                return "unclaimed";
             }
         }
         return super.onRequest(player, params);

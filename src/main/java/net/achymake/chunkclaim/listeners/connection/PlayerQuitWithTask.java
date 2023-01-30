@@ -16,8 +16,7 @@ public class PlayerQuitWithTask implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin (PlayerJoinEvent event){
         if (!event.getPlayer().getPersistentDataContainer().has(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING))return;
-        int task = event.getPlayer().getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER);
-        Bukkit.getScheduler().cancelTask(task);
+        Bukkit.getScheduler().cancelTask(event.getPlayer().getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER));
         event.getPlayer().getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner"));
         event.getPlayer().getPersistentDataContainer().remove(NamespacedKey.minecraft("change-owner-task"));
     }

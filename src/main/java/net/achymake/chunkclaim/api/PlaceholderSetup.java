@@ -1,9 +1,7 @@
 package net.achymake.chunkclaim.api;
 
 import net.achymake.chunkclaim.ChunkClaim;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.ServicePriority;
 
 public class PlaceholderSetup {
     private static boolean isPlaceholderAPIEnabled() {

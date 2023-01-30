@@ -38,12 +38,11 @@ public class SetOwner extends ChunkSubCommand {
         if (player.hasPermission("chunkclaim.setowner")){
             if (args.length == 2){
                 Chunk chunk = player.getLocation().getChunk();
-                UUID uuid = player.getUniqueId();
                 if (Settings.isClaimed(chunk)) {
-                    if (Settings.isOwner(chunk,uuid)) {
+                    if (Settings.isOwner(player,chunk)) {
                         if (player.getPersistentDataContainer().has(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING)){
                             String nextOwner = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner"), PersistentDataType.STRING);
-                            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(nextOwner);
+                            OfflinePlayer offlinePlayer = Bukkit.getServer().getOfflinePlayer(nextOwner);
                             setOwner(player,offlinePlayer.getUniqueId());
                             int task = player.getPersistentDataContainer().get(NamespacedKey.minecraft("change-owner-task"),PersistentDataType.INTEGER);
                             Bukkit.getScheduler().cancelTask(task);

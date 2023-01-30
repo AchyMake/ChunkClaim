@@ -16,7 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import java.text.MessageFormat;
-import java.util.UUID;
 
 public class PlayerInteractEntity implements Listener {
     public PlayerInteractEntity(ChunkClaim plugin){
@@ -25,13 +24,10 @@ public class PlayerInteractEntity implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerInteractEntity (PlayerInteractEntityEvent event){
         Chunk chunk = event.getRightClicked().getLocation().getChunk();
-        Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
         if (!Settings.isClaimed(chunk))return;
-        if (Settings.isOwner(chunk,uuid))return;
-        if (Settings.isMember(chunk,uuid))return;
+        Player player = event.getPlayer();
+        if (Settings.hasAccess(player,chunk))return;
         if (Config.get().getStringList("hostiles").contains(event.getRightClicked().getType().toString()))return;
-        if (Settings.hasChunkEdit(player))return;
         event.setCancelled(true);
         cancelPlayer(event.getPlayer(),chunk);
     }

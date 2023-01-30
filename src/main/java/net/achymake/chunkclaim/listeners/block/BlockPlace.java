@@ -24,13 +24,11 @@ public class BlockPlace implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerBlockPlace (BlockPlaceEvent event){
         Chunk chunk = event.getBlockPlaced().getChunk();
-        UUID uuid = event.getPlayer().getUniqueId();
         if (!Settings.isClaimed(chunk))return;
-        if (Settings.isOwner(chunk,uuid))return;
-        if (Settings.getMembers(chunk).contains(event.getPlayer().getUniqueId()))return;
-        if (Settings.hasChunkEdit(event.getPlayer()))return;
+        Player player = event.getPlayer();
+        if (Settings.hasAccess(player,chunk))return;
         event.setCancelled(true);
-        cancelPlayer(event.getPlayer(),chunk);
+        cancelPlayer(player,chunk);
     }
     private void cancelPlayer(Player player, Chunk chunk) {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk)))));

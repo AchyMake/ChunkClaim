@@ -17,7 +17,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.UUID;
 
 public class Claim extends ChunkSubCommand {
     @Override
@@ -39,9 +38,8 @@ public class Claim extends ChunkSubCommand {
     public void perform(Player player, String[] args) {
         if (args.length == 1){
             Chunk chunk = player.getLocation().getChunk();
-            UUID uuid = player.getUniqueId();
             if (Settings.isClaimed(chunk)) {
-                if (Settings.isOwner(chunk,uuid)) {
+                if (Settings.isOwner(player,chunk)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("error-chunk-already-owned")));
                 } else {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk))));

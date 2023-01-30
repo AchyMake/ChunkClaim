@@ -18,7 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.text.MessageFormat;
-import java.util.UUID;
 
 public class PlayerDamageEntityBySpectralArrow implements Listener {
     public PlayerDamageEntityBySpectralArrow(ChunkClaim plugin){
@@ -32,11 +31,8 @@ public class PlayerDamageEntityBySpectralArrow implements Listener {
         SpectralArrow arrow = (SpectralArrow) event.getDamager();
         if (arrow.getShooter() instanceof Player){
             Player player = (Player) arrow.getShooter();
-            UUID uuid = player.getUniqueId();
             if (Config.get().getStringList("hostiles").contains(event.getEntity().getType().toString()))return;
-            if (Settings.isOwner(chunk, uuid))return;
-            if (Settings.isMember(chunk, uuid))return;
-            if (Settings.hasChunkEdit(player))return;
+            if (Settings.hasAccess(player,chunk))return;
             event.setCancelled(true);
             cancelPlayer(player, chunk);
         }

@@ -26,21 +26,9 @@ public class Events {
         new PlayerDamageEntityByArrow(plugin);
         new PlayerDamageEntityBySnowball(plugin);
         new PlayerDamageEntityBySpectralArrow(plugin);
-        new Anvil(plugin);
-        new Beds(plugin);
-        new Beehives(plugin);
-        new Buttons(plugin);
-        new Chest(plugin);
-        new Crops(plugin);
-        new Doors(plugin);
-        new FenceGates(plugin);
-        new FlowerPots(plugin);
-        new Logs(plugin);
         new Physical(plugin);
+        new PlayerInteractBlock(plugin);
         new PlayerInteractEntity(plugin);
-        new ShulkerBoxes(plugin);
-        new TrapDoors(plugin);
-        new TrappedChest(plugin);
         new PlayerMove(plugin);
     }
 }

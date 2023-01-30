@@ -9,10 +9,14 @@ import net.achymake.chunkclaim.version.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ChunkClaim extends JavaPlugin {
+    public static List<Player> edit = new ArrayList<>();
     public static Economy econ;
     public static ChunkClaim instance;
     @Override
@@ -30,6 +34,7 @@ public final class ChunkClaim extends JavaPlugin {
     }
     @Override
     public void onDisable() {
+        edit.clear();
         sendMessage("&cDisabled&r "+this.getName()+ " " +this.getDescription().getVersion());
     }
     public void sendMessage(String message){
