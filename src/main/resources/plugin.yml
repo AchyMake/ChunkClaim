@@ -4,7 +4,7 @@ main: net.achymake.chunkclaim.ChunkClaim
 api-version: 1.16
 prefix: '${project.name}'
 load: POSTWORLD
-depend: [ Vault, PlaceholderAPI ]
+softdepend: [ Vault, PlaceholderAPI ]
 authors: [ AchyMake ]
 description: '${project.description}'
 permissions:

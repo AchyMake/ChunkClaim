@@ -17,9 +17,9 @@ import java.util.UUID;
 
 public class Settings {
     public static boolean hasAccess(Player player, Chunk chunk){
-        if (isOwner(player,chunk)){
+        if (chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING).equals(player.getUniqueId().toString())){
             return true;
-        }else if (isMember(player,chunk)){
+        }else if (getMembersUUID(chunk).contains(player.getUniqueId())){
             return true;
         }else return ChunkClaim.edit.contains(player);
     }
@@ -35,10 +35,6 @@ public class Settings {
     public static String getOwner(Chunk chunk) {
         String uuidString = chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
         return Bukkit.getServer().getOfflinePlayer(UUID.fromString(uuidString)).getName();
-    }
-    public static UUID getOwnerUUID(Chunk chunk) {
-        String uuidString = chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
-        return UUID.fromString(uuidString);
     }
     public static String getDateClaimed(Chunk chunk) {
         return chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("date-claimed"), PersistentDataType.STRING);
