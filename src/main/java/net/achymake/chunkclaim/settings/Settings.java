@@ -21,10 +21,10 @@ public class Settings {
             return true;
         }else if (isMember(player,chunk)){
             return true;
-        }else return hasChunkEdit(player);
+        }else return ChunkClaim.edit.contains(player);
     }
     public static boolean hasChunkEdit(Player player) {
-        return player.getPersistentDataContainer().has(NamespacedKey.minecraft("chunk-edit"), PersistentDataType.STRING);
+        return ChunkClaim.edit.contains(player);
     }
     public static boolean isClaimed(Chunk chunk) {
         return chunk.getPersistentDataContainer().has(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
