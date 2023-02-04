@@ -45,7 +45,7 @@ public class PlaceholderProvider extends PlaceholderExpansion {
         }
         if (params.equals("owner")) {
             if (Settings.isClaimed(player.getLocation().getChunk())){
-                return Settings.getOwner(player.getLocation().getChunk());
+                return Settings.getOwner(player.getLocation().getChunk()).getName();
             }else{
                 return "none";
             }

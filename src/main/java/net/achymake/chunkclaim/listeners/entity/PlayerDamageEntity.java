@@ -2,12 +2,11 @@ package net.achymake.chunkclaim.listeners.entity;
 
 import net.achymake.chunkclaim.ChunkClaim;
 import net.achymake.chunkclaim.config.Config;
-import net.achymake.chunkclaim.config.MessageConfig;
+import net.achymake.chunkclaim.config.Message;
 import net.achymake.chunkclaim.settings.Settings;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -15,8 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import java.text.MessageFormat;
 
 public class PlayerDamageEntity implements Listener {
     public PlayerDamageEntity(ChunkClaim plugin){
@@ -29,12 +26,9 @@ public class PlayerDamageEntity implements Listener {
         if (!Settings.isClaimed(chunk))return;
         if (!event.getDamager().getType().equals(EntityType.PLAYER))return;
         Player player = (Player) event.getDamager();
-        if (Config.get().getStringList("hostiles").contains(event.getEntity().getType().toString()))return;
+        if (Config.config.getStringList("hostiles").contains(event.getEntity().getType().toString()))return;
         if (Settings.hasAccess(player,chunk))return;
         event.setCancelled(true);
-        cancelPlayer(player,chunk);
-    }
-    private void cancelPlayer(Player player, Chunk chunk) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk)))));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(Message.eventCancel(Settings.getOwner(chunk))));
     }
 }

@@ -23,14 +23,13 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
         chunkSubCommands.add(new Info());
         chunkSubCommands.add(new Members());
         chunkSubCommands.add(new Reload());
-        chunkSubCommands.add(new SetOwner());
         chunkSubCommands.add(new Unclaim());
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         if (args.length == 0){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cusage: &f/chunk help"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cUsage: &f/chunk help"));
         }else{
             for (ChunkSubCommand commands : getSubCommands()){
                 if (args[0].equals(commands.getName())){
@@ -47,35 +46,54 @@ public class ChunkCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> commands = new ArrayList<>();
         if (args.length == 1){
+            if (sender.hasPermission("chunkclaim.claim")){
+                commands.add("claim");
+            }
             if (sender.hasPermission("chunkclaim.delete")){
                 commands.add("delete");
             }
             if (sender.hasPermission("chunkclaim.edit")){
                 commands.add("edit");
             }
+            if (sender.hasPermission("chunkclaim.help")){
+                commands.add("help");
+            }
             if (sender.hasPermission("chunkclaim.info")){
                 commands.add("info");
+            }
+            if (sender.hasPermission("chunkclaim.members")){
+                commands.add("members");
             }
             if (sender.hasPermission("chunkclaim.reload")){
                 commands.add("reload");
             }
-            if (sender.hasPermission("chunkclaim.setowner")){
-                commands.add("setowner");
+            if (sender.hasPermission("chunkclaim.unclaim")){
+                commands.add("unclaim");
             }
-            commands.add("claim");
-            commands.add("help");
-            commands.add("members");
-            commands.add("unclaim");
             return commands;
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("members")){
-                commands.add("add");
-                commands.add("remove");
-                return commands;
+            if (sender.hasPermission("chunkclaim.members")){
+                if (args[0].equalsIgnoreCase("members")){
+                    commands.add("add");
+                    commands.add("remove");
+                    return commands;
+                }
             }
         } else if (args.length == 3) {
-            for (Player players : Bukkit.getOnlinePlayers()){
-                commands.add(players.getName());
+            if (sender.hasPermission("chunkclaim.members")){
+                if (args[0].equalsIgnoreCase("members")){
+                    for (Player players : Bukkit.getOnlinePlayers()){
+                        commands.add(players.getName());
+                    }
+                    return commands;
+                }
+            }
+        } else if (args.length == 4) {
+            if (sender.hasPermission("chunkclaim.members")){
+                if (args[0].equalsIgnoreCase("members")){
+                    commands.add("all");
+                    return commands;
+                }
             }
         }
         return commands;

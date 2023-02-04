@@ -1,9 +1,11 @@
 package net.achymake.chunkclaim.settings;
 
 import net.achymake.chunkclaim.ChunkClaim;
+import net.achymake.chunkclaim.config.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -19,7 +21,9 @@ public class Settings {
     public static boolean hasAccess(Player player, Chunk chunk){
         if (chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING).equals(player.getUniqueId().toString())){
             return true;
-        }else if (getMembersUUID(chunk).contains(player.getUniqueId())){
+        }else if (isMember(player, chunk)){
+            return true;
+        }else if (PlayerConfig.get(getOwner(chunk)).getStringList("members").contains(player.getUniqueId().toString())){
             return true;
         }else return ChunkClaim.edit.contains(player);
     }
@@ -32,9 +36,9 @@ public class Settings {
     public static boolean isOwner(Player player, Chunk chunk) {
         return chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING).equals(player.getUniqueId().toString());
     }
-    public static String getOwner(Chunk chunk) {
+    public static OfflinePlayer getOwner(Chunk chunk) {
         String uuidString = chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("owner"), PersistentDataType.STRING);
-        return Bukkit.getServer().getOfflinePlayer(UUID.fromString(uuidString)).getName();
+        return Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
     }
     public static String getDateClaimed(Chunk chunk) {
         return chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("date-claimed"), PersistentDataType.STRING);
@@ -43,7 +47,7 @@ public class Settings {
         return getMembersUUID(chunk).contains(player.getUniqueId());
     }
     public static List<String> getMembers(Chunk chunk) {
-        ArrayList<String> names = new ArrayList();
+        List<String> names = new ArrayList<>();
         String encodedUUID = chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("members"), PersistentDataType.STRING);
         if (!encodedUUID.isEmpty()) {
             byte[] rawData = Base64.getDecoder().decode(encodedUUID);
@@ -61,7 +65,7 @@ public class Settings {
         return names;
     }
     public static List<UUID> getMembersUUID(Chunk chunk) {
-        ArrayList<UUID> uuidList = new ArrayList<>();
+        List<UUID> uuidList = new ArrayList<>();
         String encodedUUID = chunk.getPersistentDataContainer().get(NamespacedKey.minecraft("members"), PersistentDataType.STRING);
         if (!encodedUUID.isEmpty()) {
             byte[] rawData = Base64.getDecoder().decode(encodedUUID);

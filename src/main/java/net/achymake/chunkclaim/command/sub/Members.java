@@ -1,7 +1,8 @@
 package net.achymake.chunkclaim.command.sub;
 
 import net.achymake.chunkclaim.command.ChunkSubCommand;
-import net.achymake.chunkclaim.config.MessageConfig;
+import net.achymake.chunkclaim.config.Message;
+import net.achymake.chunkclaim.config.PlayerConfig;
 import net.achymake.chunkclaim.settings.Settings;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -10,7 +11,6 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
@@ -38,36 +38,92 @@ public class Members extends ChunkSubCommand {
             if (Settings.isOwner(player,chunk)) {
                 if (args.length == 1) {
                     if (Settings.getMembers(chunk).isEmpty()){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("command-members-no-members")));
+                        player.sendMessage(Message.commandMembersEmpty());
                     }else{
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',MessageConfig.get().getString("command-members")));
+                        player.sendMessage(Message.commandMembersTitle());
                         for (UUID uuidListed : Settings.getMembersUUID(chunk)){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&7-&f "+Bukkit.getServer().getOfflinePlayer(uuidListed).getName()));
+                            player.sendMessage(Message.commandMembersList(Bukkit.getOfflinePlayer(uuidListed)));
+                        }
+                    }
+                    if (!PlayerConfig.get(player).getStringList("members").isEmpty()){
+                        player.sendMessage(Message.commandAllMembersTitle());
+                        for (String uuidListed : PlayerConfig.get(player).getStringList("members")){
+                            player.sendMessage(Message.commandAllMembersList(Bukkit.getOfflinePlayer(UUID.fromString(uuidListed))));
+
                         }
                     }
                 } else if (args.length == 3) {
                     OfflinePlayer target = Bukkit.getOfflinePlayer(args[2]);
                     if (args[1].equalsIgnoreCase("add")) {
                         if (Settings.getMembersUUID(chunk).contains(target.getUniqueId())) {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-members-already-member"),target.getName())));
+                            player.sendMessage(Message.commandMembersAddAlreadyMember(target));
                         } else {
                             addMember(chunk,target.getUniqueId());
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-members-add"),target.getName())));
+                            player.sendMessage(Message.commandMembersAddSuccess(target));
                         }
                     } else if (args[1].equalsIgnoreCase("remove")) {
                         if (Settings.getMembersUUID(chunk).contains(target.getUniqueId())) {
                             removeMember(chunk,target.getUniqueId());
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-members-remove"),target.getName())));
+                            player.sendMessage(Message.commandMembersRemoveSuccess(target));
                         } else {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("command-members-already-non-member"),target.getName())));
+                            player.sendMessage(Message.commandMembersRemoveAlreadyNonMember(target));
+                        }
+                    }
+                } else if (args.length == 4) {
+                    if (args[1].equalsIgnoreCase("add")){
+                        if (args[3].equalsIgnoreCase("all")){
+                            Player target = player.getServer().getPlayerExact(args[2]);
+                            if (target != null){
+                                if (PlayerConfig.get(player).getStringList("members").contains(target.getUniqueId().toString())){
+                                    player.sendMessage(Message.commandMembersAddAllAlreadyMember(target));
+                                }else{
+                                    List<String> members = PlayerConfig.get(player).getStringList("members");
+                                    members.add(target.getUniqueId().toString());
+                                    PlayerConfig.setStringList(player,"members",members);
+                                    player.sendMessage(Message.commandMembersAddAllSuccess(target));
+                                }
+                            }else{
+                                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[2]);
+                                if (PlayerConfig.get(player).getStringList("members").contains(offlinePlayer.getUniqueId().toString())){
+                                    player.sendMessage(Message.commandMembersAddAllAlreadyMember(offlinePlayer));
+                                }else{
+                                    List<String> members = PlayerConfig.get(player).getStringList("members");
+                                    members.add(offlinePlayer.getUniqueId().toString());
+                                    PlayerConfig.setStringList(player,"members",members);
+                                    player.sendMessage(Message.commandMembersAddAllSuccess(offlinePlayer));
+                                }
+
+                            }
+                        }
+                    }else if (args[1].equalsIgnoreCase("remove")){
+                        if (args[3].equalsIgnoreCase("all")){
+                            Player target = player.getServer().getPlayerExact(args[2]);
+                            if (target != null){
+                                if (PlayerConfig.get(player).getStringList("members").contains(target.getUniqueId().toString())){
+                                    List<String> members = PlayerConfig.get(player).getStringList("members");
+                                    members.remove(target.getUniqueId().toString());
+                                    PlayerConfig.setStringList(player,"members",members);
+                                    player.sendMessage(Message.commandMembersRemoveAllSuccess(target));
+                                }else{
+                                    player.sendMessage(Message.commandMembersRemoveAllNonMember(target));
+                                }
+                            }else{
+                                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[2]);
+                                if (PlayerConfig.get(player).getStringList("members").contains(offlinePlayer.getUniqueId().toString())){
+                                    List<String> members = PlayerConfig.get(player).getStringList("members");
+                                    members.remove(offlinePlayer.getUniqueId().toString());
+                                    PlayerConfig.setStringList(player,"members",members);
+                                    player.sendMessage(Message.commandMembersRemoveAllSuccess(offlinePlayer));
+                                }else{
+                                    player.sendMessage(Message.commandMembersRemoveAllNonMember(offlinePlayer));
+                                }
+                            }
                         }
                     }
                 }
             } else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(MessageConfig.get().getString("error-chunk-already-claimed"),Settings.getOwner(chunk))));
+                player.sendMessage(Message.commandMembersAlreadyClaimed(Settings.getOwner(chunk)));
             }
-        } else {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', MessageConfig.get().getString("error-chunk-already-unclaimed")));
         }
     }
     private static void addMember(Chunk chunk, UUID uuid){

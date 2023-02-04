@@ -8,25 +8,31 @@ softdepend: [ Vault, PlaceholderAPI ]
 authors: [ AchyMake ]
 description: '${project.description}'
 permissions:
-  chunkclaim.default:
+  chunkclaim.claim:
     description: default player
     default: op
-  chunkclaim.setowner:
-    description: sets chunk owner
-    default: op
   chunkclaim.delete:
-    description: delete claimed chunks
+    description: default player
     default: op
   chunkclaim.edit:
-    description: edit claimed chunks
+    description: default player
     default: op
+  chunkclaim.help:
+    description: default player
+    default: true
   chunkclaim.info:
-    description: check chunk info
+    description: default player
+    default: op
+  chunkclaim.members:
+    description: default player
     default: op
   chunkclaim.reload:
     description: reload config
     default: op
+  chunkclaim.unclaim:
+    description: default player
+    default: op
 commands:
   chunk:
-    permission: chunkclaim.default
+    permission: chunkclaim.help
     description: allows to claim chunks

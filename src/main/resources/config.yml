@@ -10,24 +10,16 @@ settings:
   claim:
     # Spigot particle list: "https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html"
     particle:
-      # type: TOTEM
       type: TOTEM
     sound:
       # Spigot sound list: "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html"
-      # type: BLOCK_AMETHYST_BLOCK_BREAK
-      # volume: 0.7F
-      # pitch 1.0F
       type: BLOCK_AMETHYST_BLOCK_BREAK
       volume: 0.7F
       pitch: 1.0F
   un-claim:
     particle:
-      # type: SPELL_INSTANT
       type: SPELL_INSTANT
     sound:
-      # type: BLOCK_AMETHYST_BLOCK_BREAK
-      # volume: 0.7F
-      # pitch 1.0F
       type: BLOCK_AMETHYST_BLOCK_BREAK
       volume: 0.7F
       pitch: 1.0F
