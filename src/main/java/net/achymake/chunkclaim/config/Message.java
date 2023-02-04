@@ -59,6 +59,10 @@ public class Message {
         config.addDefault("event.chunk.visit","&6Visiting {0} chunk");
         config.addDefault("event.chunk.exit","&6Exiting {0} chunk");
         config.addDefault("event.chunk.cancel","&cChunk is owned by&f {0}");
+        config.addDefault("placeholderapi.chunk.owner.none","&fNone");
+        config.addDefault("placeholderapi.chunk.access.true","&aTrue");
+        config.addDefault("placeholderapi.chunk.access.false","&aFalse");
+        config.addDefault("placeholderapi.chunk.access.unclaimed","&aFalse");
         config.options().copyDefaults(true);
         try {
             config.save(file);

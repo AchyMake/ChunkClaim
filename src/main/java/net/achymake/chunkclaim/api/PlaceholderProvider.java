@@ -2,8 +2,8 @@ package net.achymake.chunkclaim.api;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.achymake.chunkclaim.ChunkClaim;
+import net.achymake.chunkclaim.config.Message;
 import net.achymake.chunkclaim.settings.Settings;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PlaceholderProvider extends PlaceholderExpansion {
@@ -36,29 +36,22 @@ public class PlaceholderProvider extends PlaceholderExpansion {
         if (player == null){
             return "";
         }
-        if (params.equals("is_claimed")) {
-            if (Settings.isClaimed(player.getLocation().getChunk())){
-                return ChatColor.translateAlternateColorCodes('&',"&aTrue");
-            }else{
-                return ChatColor.translateAlternateColorCodes('&',"&cFalse");
-            }
-        }
         if (params.equals("owner")) {
             if (Settings.isClaimed(player.getLocation().getChunk())){
                 return Settings.getOwner(player.getLocation().getChunk()).getName();
             }else{
-                return "none";
+                return Message.color(Message.config.getString("placeholderapi.chunk.owner.none"));
             }
         }
         if (params.equals("has_access")) {
             if (Settings.isClaimed(player.getLocation().getChunk())){
                 if (Settings.hasAccess(player,player.getLocation().getChunk())){
-                    return ChatColor.translateAlternateColorCodes('&',"&aTrue");
+                    return Message.color(Message.config.getString("placeholderapi.chunk.access.true"));
                 }else{
-                    return ChatColor.translateAlternateColorCodes('&',"&cFalse");
+                    return Message.color(Message.config.getString("placeholderapi.chunk.access.false"));
                 }
             }else{
-                return "unclaimed";
+                return Message.color(Message.config.getString("placeholderapi.chunk.access.unclaimed"));
             }
         }
         return super.onRequest(player, params);
