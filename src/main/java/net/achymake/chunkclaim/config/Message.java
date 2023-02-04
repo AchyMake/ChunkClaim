@@ -62,7 +62,7 @@ public class Message {
         config.addDefault("placeholderapi.chunk.owner.none","&fNone");
         config.addDefault("placeholderapi.chunk.access.true","&aTrue");
         config.addDefault("placeholderapi.chunk.access.false","&aFalse");
-        config.addDefault("placeholderapi.chunk.access.unclaimed","&aFalse");
+        config.addDefault("placeholderapi.chunk.access.unclaimed","&aTrue");
         config.options().copyDefaults(true);
         try {
             config.save(file);
